@@ -274,7 +274,7 @@ public class BusArriveStop {
     @SuppressLint("DefaultLocale")
     @Override
     public String toString() {
-            return String.format("%-6s%43s", RouteName.Zh_tw , PlateNumb);
+        return RouteName.Zh_tw + "," +Direction + "," + StopName.Zh_tw  + "," + PlateNumb;
     }
 }
 

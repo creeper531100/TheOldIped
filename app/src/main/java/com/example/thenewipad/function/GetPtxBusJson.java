@@ -25,10 +25,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-public class GetJson {
+public class GetPtxBusJson {
     String url;
     String response = "";
-    public GetJson(String url){
+    public GetPtxBusJson(String url){
         this.url = url;
         this.response = response;
     }

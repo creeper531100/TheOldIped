@@ -17,10 +17,15 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
-import com.example.thenewipad.function.GetBusData;
+import com.example.thenewipad.formatFolder.BusArriveStop;
+import com.example.thenewipad.formatFolder.BusRoute;
+import com.example.thenewipad.formatFolder.BusStopRoute;
+import com.example.thenewipad.function.JsonDataFormat;
 import com.example.thenewipad.function.ProgramAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -51,17 +56,26 @@ public class CellularPage extends Fragment {
         return v;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void busStop(String inputStr){
+    public void busStop(String inputStr) {
         ArrayList<String> contentText = new ArrayList<String>();
         ArrayList<String> title = new ArrayList<String>();
-        GetBusData getJson = new GetBusData("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/"+inputStr+"?&$format=JSON");
+        Map<String, String>direction = new HashMap<>();
+        direction.put("0", "去程");
+        direction.put("1", "回程");
+        JsonDataFormat<BusRoute> getJson = new JsonDataFormat<BusRoute>
+                ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
+                        //RealTimeNearStop, StopOfRoute, Route
+                        + inputStr + "?&$format=JSON", BusRoute.class);
+
         getJson.request();
-        for (int i = 0; i < getJson.getStopRoute().size(); i++) {
+        List<String> dataParsing = getJson.dataParsing();
+        System.out.println(dataParsing);
+        for (int i = 0; i < dataParsing.size(); i++) {
             num.add(R.drawable.ic_baseline_search_24);
         }
-        for(Map.Entry<String, String> row : getJson.getStopRoute().entrySet()){
-            contentText.add(row.getKey());
-            title.add(row.getValue());
+        for (int i = 0; i< dataParsing.size() ; i+=2) {
+            title.add(dataParsing.get(i));
+            contentText.add(dataParsing.get(i+1));
         }
         ProgramAdapter programAdapter =
                 new ProgramAdapter(getContext(), title, num, contentText);
