@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TheNewIpad</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="search">search</string>
+    <string name="about">about</string>
+    <string name="account">Account</string>
+    <string name="times">早安\n現在是20:40分</string>
+    <string name="parser">Parser</string>
+    <string name="wenzi">我是文字</string>
+    <string name="_701">701</string>
+</resources>
