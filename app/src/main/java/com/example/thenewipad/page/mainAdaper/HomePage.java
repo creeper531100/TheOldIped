@@ -28,13 +28,8 @@ public class HomePage extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_page, container, false);
         showTime = (TextView) v.findViewById(R.id.TitleText);
-        //time
-        @SuppressLint("SimpleDateFormat") String ante = (new SimpleDateFormat("a")).format(date);
-        @SuppressLint("SimpleDateFormat") String sdf = (new SimpleDateFormat("現在是HH:mm")).format(date);
-        if (ante.equals("上午"))
-            showTime.setText("早安\n"+sdf);
-        else
-            showTime.setText("晚安\n"+sdf);
+        @SuppressLint("SimpleDateFormat") String sdf = (new SimpleDateFormat("目前a, HH:mm")).format(date);
+        showTime.setText("空頁面...\n"+sdf);
         return v;
     }
 }
