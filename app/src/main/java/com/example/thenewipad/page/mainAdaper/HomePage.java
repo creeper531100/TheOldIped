@@ -1,4 +1,4 @@
-package com.example.thenewipad.page;
+package com.example.thenewipad.page.mainAdaper;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

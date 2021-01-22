@@ -1,5 +1,7 @@
-package com.example.thenewipad.page;
+package com.example.thenewipad.page.mainAdaper;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,10 +19,10 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.arlib.floatingsearchview.FloatingSearchView;
+import com.arlib.floatingsearchview.util.view.SearchInputView;
 import com.example.thenewipad.R;
-import com.example.thenewipad.formatFolder.BusArriveStop;
 import com.example.thenewipad.formatFolder.BusRoute;
-import com.example.thenewipad.formatFolder.BusStopRoute;
 import com.example.thenewipad.function.JsonDataFormat;
 import com.example.thenewipad.function.ProgramAdapter;
 
@@ -41,44 +44,38 @@ public class CellularPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.cellular_page, container, false);
-        lv = (ListView) v.findViewById(R.id.Buslist);
-        search = (EditText) v.findViewById(R.id.searchBar);
+        lv = (ListView) v.findViewById(R.id.buslist);
         mQeue = Volley.newRequestQueue(getActivity());
-        busStop("701");
-        Button searchBtn = (Button) v.findViewById(R.id.searchBtn);
-        searchBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                String inputStr = search.getText().toString();
-                busStop(inputStr);
-            }
-        });
+        busStop();
         return v;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void busStop(String inputStr) {
+    public void busStop() {
         ArrayList<String> contentText = new ArrayList<String>();
         ArrayList<String> title = new ArrayList<String>();
-        Map<String, String>direction = new HashMap<>();
-        direction.put("0", "去程");
-        direction.put("1", "回程");
-        JsonDataFormat<BusRoute> getJson = new JsonDataFormat<BusRoute>
-                ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
-                        //RealTimeNearStop, StopOfRoute, Route
-                        + inputStr + "?&$format=JSON", BusRoute.class);
-
-        getJson.request();
-        List<String> dataParsing = getJson.dataParsing();
-        System.out.println(dataParsing);
-        for (int i = 0; i < dataParsing.size(); i++) {
+        String[] searchlist = {"12", "55", "700", "701", "900", "901"};
+        Map<String, String> direction = new HashMap<>();
+        for (String s : searchlist) {
+            JsonDataFormat<BusRoute> getJson = new JsonDataFormat<BusRoute>
+                    ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
+                            //RealTimeNearStop, StopOfRoute, Route
+                            + s + "?&$format=JSON", BusRoute.class);
+            getJson.request();
+            List<String> dataParsing = getJson.dataParsing();
+            System.out.println(dataParsing);
+            for (int i = 0; i < dataParsing.size(); i += 2) {
+                if (dataParsing.get(i).equals(s)) {
+                    title.add(dataParsing.get(i));
+                    contentText.add(dataParsing.get(i + 1));
+                }
+            }
+        }
+        for (int i = 0; i < contentText.size(); i++) {
             num.add(R.drawable.ic_baseline_search_24);
         }
-        for (int i = 0; i< dataParsing.size() ; i+=2) {
-            title.add(dataParsing.get(i));
-            contentText.add(dataParsing.get(i+1));
-        }
         ProgramAdapter programAdapter =
-                new ProgramAdapter(getContext(), title, num, contentText);
+                new ProgramAdapter(getContext(), title, num, contentText, R.layout.list_page);
         lv.setAdapter(programAdapter);
     }
 }

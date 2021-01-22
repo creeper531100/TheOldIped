@@ -18,21 +18,25 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     ArrayList<Integer> images;
     ArrayList<String> programName;
     ArrayList<String> programDescription;
-    public ProgramAdapter(Context context, ArrayList<String> programName, ArrayList<Integer> images, ArrayList<String> programDescription) {
-        super(context, R.layout.list_page, R.id.textView, programName);
+    int page;
+    public ProgramAdapter(Context context, ArrayList<String> programName, ArrayList<Integer> images,
+                          ArrayList<String> programDescription, int page) {
+        super(context, page, R.id.textView, programName);
         this.context = context;
         this.images = images;
         this.programName = programName;
+        this.page = page;
         this.programDescription = programDescription;
     }
 
     @Override
-    public View getView(int position,  View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View singleItem = convertView;
         ProgramViewHolder holder = null;
         if (singleItem==null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            singleItem = layoutInflater.inflate(R.layout.list_page, parent, false);
+            LayoutInflater layoutInflater =
+                    (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            singleItem = layoutInflater.inflate(page, parent, false);
             holder = new ProgramViewHolder(singleItem);
             singleItem.setTag(holder);
         } else {

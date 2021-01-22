@@ -29,7 +29,6 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
                 contentText.addAll(Arrays.asList(data.toString().split(",")));
             }
         }
-
         return contentText;
     }
 }
