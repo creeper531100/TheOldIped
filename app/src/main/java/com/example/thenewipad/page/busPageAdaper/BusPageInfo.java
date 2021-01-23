@@ -1,113 +1,81 @@
-package com.example.thenewipad.page.busPageAdaper;
+package com.example.thenewipad.page.busPageAdaper
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.os.Build
+import android.os.Bundle
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.example.thenewipad.R
+import com.example.thenewipad.formatFolder.BusStopRoute
+import com.example.thenewipad.function.JsonDataFormat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import com.example.thenewipad.R;
-import com.example.thenewipad.formatFolder.BusStopRoute;
-import com.example.thenewipad.function.JsonDataFormat;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class BusPageInfo extends AppCompatActivity {
-
-    ViewPager viewPager;
-    String[] contentArrary;
-    TabLayout tabLayout;
-    ArrayList<String> To = new ArrayList<>();
-    ArrayList<String> Back = new ArrayList<>();
+class BusPageInfo : AppCompatActivity() {
+    var viewPager: ViewPager? = null
+    var contentArrary: Array<String>
+    var tabLayout: TabLayout? = null
+    var To = ArrayList<String>()
+    var Back = ArrayList<String>()
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_page_info);
-
-        TextView titleText = findViewById(R.id.TitleText);
-        TextView busHeaderText = findViewById(R.id.BusHeaderText);
-        tabLayout = findViewById(R.id.tabs);
-        viewPager = findViewById(R.id.view_pager);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "哈哈", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        Intent intent = getIntent();
-        String getContent = intent.getStringExtra("title");
-        contentArrary = getContent.split("\n");
-        String[] direction = contentArrary[1].split("-", 2);
-
-
-        titleText.setText(contentArrary[0]);
-        busHeaderText.setText(contentArrary[1]);
-
-        JsonDataFormat<BusStopRoute> getJson = new JsonDataFormat<>
-                ("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/"
-                        //RealTimeNearStop, StopOfRoute, Route
-                        + contentArrary[0] + "?&$format=JSON", BusStopRoute.class);
-        getJson.request();
-        List<String> dataParsing = getJson.dataParsing();
-        System.out.println(dataParsing);
-        for (int i = 0; i< dataParsing.size() ; i+=3) {
-            if(dataParsing.get(i + 1).equals(contentArrary[0])) {
-                if(dataParsing.get(i).equals("1"))
-                    To.add(dataParsing.get(i + 2));
-                else
-                    Back.add(dataParsing.get(i + 2));
-            } //else
-                //break;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bus_page_info)
+        val titleText = findViewById<TextView>(R.id.TitleText)
+        val busHeaderText = findViewById<TextView>(R.id.BusHeaderText)
+        tabLayout = findViewById(R.id.tabs)
+        viewPager = findViewById(R.id.view_pager)
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "哈哈", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
         }
-
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), direction);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.setAdapter(myPagerAdapter);
+        val intent = intent
+        val getContent = intent.getStringExtra("title")
+        contentArrary = getContent!!.split("\n".toRegex()).toTypedArray()
+        val direction: Array<String?> = contentArrary[1].split("-".toRegex(), 2).toTypedArray()
+        titleText.text = contentArrary[0]
+        busHeaderText.text = contentArrary[1]
+        val getJson = JsonDataFormat("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/" //RealTimeNearStop, StopOfRoute, Route
+                + contentArrary[0] + "?&\$format=JSON", BusStopRoute::class.java)
+        getJson.request()
+        val dataParsing = getJson.dataParsing()
+        println(dataParsing)
+        var i = 0
+        while (i < dataParsing.size) {
+            if (dataParsing[i + 1] == contentArrary[0]) {
+                if (dataParsing[i] == "1") To.add(dataParsing[i + 2]) else Back.add(dataParsing[i + 2])
+            } //else
+            i += 3
+        }
+        val myPagerAdapter = MyPagerAdapter(supportFragmentManager, direction)
+        tabLayout.setupWithViewPager(viewPager)
+        viewPager.setAdapter(myPagerAdapter)
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter{
-        String[] fragmentNames;
-        public MyPagerAdapter(@NonNull FragmentManager fm, String[] fragmentNames) {
-            super(fm);
-            this.fragmentNames = fragmentNames;
-        }
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0:
-                    return new BusToPage(contentArrary[0], To);
-                case 1:
-                    return new BusBackPage(contentArrary[0], Back);
+    internal inner class MyPagerAdapter(fm: FragmentManager, var fragmentNames: Array<String?>) : FragmentPagerAdapter(fm) {
+        override fun getItem(position: Int): Fragment {
+            when (position) {
+                0 -> return BusToPage(contentArrary[0], To)
+                1 -> return BusBackPage(contentArrary[0], Back)
             }
-            return null;
+            return null
         }
-        @Override
-        public int getCount() {
-            return fragmentNames.length;
+
+        override fun getCount(): Int {
+            return fragmentNames.size
         }
-        public CharSequence getPageTitle(int position){
-            return fragmentNames[position];
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return fragmentNames[position]
         }
+
     }
 }
