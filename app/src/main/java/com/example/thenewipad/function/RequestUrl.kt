@@ -1,5 +1,6 @@
 package com.example.thenewipad.function
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.security.SignatureException
@@ -9,6 +10,10 @@ import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.net.ssl.*
+
+/* 這邊請不要管他!!!!
+ * 這個不是我寫的
+ * Kotlin分析比較快 */
 
 internal object HMAC_SHA1 {
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -58,23 +63,17 @@ internal object SslUtils {
     }
 
     internal class miTM : TrustManager, X509TrustManager {
-        override fun getAcceptedIssuers(): Array<X509Certificate> {
+        override fun getAcceptedIssuers(): Array<X509Certificate>? {
             return null
         }
 
-        fun isServerTrusted(certs: Array<X509Certificate?>?): Boolean {
-            return true
-        }
-
-        fun isClientTrusted(certs: Array<X509Certificate?>?): Boolean {
-            return true
-        }
-
+        @SuppressLint("TrustAllX509TrustManager")
         @Throws(CertificateException::class)
         override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {
             return
         }
 
+        @SuppressLint("TrustAllX509TrustManager")
         @Throws(CertificateException::class)
         override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {
             return
