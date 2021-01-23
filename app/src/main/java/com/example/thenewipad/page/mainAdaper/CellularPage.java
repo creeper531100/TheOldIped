@@ -1,7 +1,5 @@
 package com.example.thenewipad.page.mainAdaper;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.arlib.floatingsearchview.util.view.SearchInputView;
 import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.BusRoute;
 import com.example.thenewipad.function.JsonDataFormat;
@@ -52,30 +47,29 @@ public class CellularPage extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void busStop() {
-        ArrayList<String> contentText = new ArrayList<String>();
-        ArrayList<String> title = new ArrayList<String>();
-        String[] searchlist = {"12", "55", "700", "701", "900", "901"};
-        Map<String, String> direction = new HashMap<>();
-        for (String s : searchlist) {
-            JsonDataFormat<BusRoute> getJson = new JsonDataFormat<BusRoute>
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        ArrayList<String> dataParsing = new ArrayList<>();
+
+        stringArrayList.add("12");
+        stringArrayList.add("55");
+        stringArrayList.add("700");
+        stringArrayList.add("701");
+        stringArrayList.add("900");
+        stringArrayList.add("901");
+
+        for (String s : stringArrayList) {
+            JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>
                     ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
                             //RealTimeNearStop, StopOfRoute, Route
                             + s + "?&$format=JSON", BusRoute.class);
             getJson.request();
-            List<String> dataParsing = getJson.dataParsing();
-            System.out.println(dataParsing);
-            for (int i = 0; i < dataParsing.size(); i += 2) {
-                if (dataParsing.get(i).equals(s)) {
-                    title.add(dataParsing.get(i));
-                    contentText.add(dataParsing.get(i + 1));
-                }
-            }
+            dataParsing.add(getJson.dataParsingString(s));
         }
-        for (int i = 0; i < contentText.size(); i++) {
+        for (int i = 0; i < dataParsing.size(); i++) {
             num.add(R.drawable.ic_baseline_search_24);
         }
         ProgramAdapter programAdapter =
-                new ProgramAdapter(getContext(), title, num, contentText, R.layout.list_page);
+                new ProgramAdapter(getContext(), stringArrayList, num, dataParsing, R.layout.list_page);
         lv.setAdapter(programAdapter);
     }
 }

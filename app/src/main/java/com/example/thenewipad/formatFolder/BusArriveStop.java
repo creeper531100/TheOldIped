@@ -274,7 +274,8 @@ public class BusArriveStop {
     @SuppressLint("DefaultLocale")
     @Override
     public String toString() {
-        return RouteName.Zh_tw + "," +Direction + "," + StopName.Zh_tw  + "," + PlateNumb;
+        return Direction + RouteName.Zh_tw + "," + StopName.Zh_tw  + "," + PlateNumb;
+        //[0701, 三村里, EAA-0607]
     }
 }
 

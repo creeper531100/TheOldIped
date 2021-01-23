@@ -14,13 +14,19 @@ import java.security.SignatureException
 import java.util.*
 import java.util.zip.GZIPInputStream
 
+
+/* 這邊請不要管他!!!!
+ * 這個不是我寫的
+ * Kotlin分析比較快 */
+
+
 open class GetPtxBusJson(var url: String) {
+    @kotlin.jvm.JvmField
     var response = ""
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     fun request(): String {
         var connection: HttpURLConnection? = null
-        var str: String
         val APPID = "8af3b6907d5c443d90b6bd2f18361c15"
         val APPKey = "6f5mGu2y_kH-MaeZ2NKlS0_MDzI"
         val xdate = serverTime
@@ -30,13 +36,10 @@ open class GetPtxBusJson(var url: String) {
         try {
             Signature = HMAC_SHA1.Signature(SignDate, APPKey)
         } catch (e1: SignatureException) {
-            // TODO Auto-generated catch block
             e1.printStackTrace()
         }
-        println("Signature :$Signature")
         val sAuth = ("hmac username=\"" + APPID + "\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\""
                 + Signature + "\"")
-        println(sAuth)
         try {
             val url = URL(url)
             if ("https".equals(url.protocol, ignoreCase = true)) {
@@ -44,7 +47,7 @@ open class GetPtxBusJson(var url: String) {
             }
             connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
-            connection!!.setRequestProperty("Authorization", sAuth)
+            connection.setRequestProperty("Authorization", sAuth)
             connection.setRequestProperty("x-date", xdate)
             connection.setRequestProperty("Accept-Encoding", "gzip")
             connection.doInput = true
@@ -67,7 +70,6 @@ open class GetPtxBusJson(var url: String) {
             while (`in`.readLine().also { line = it } != null) {
                 response += """
                     $line
-                    
                     """.trimIndent()
             }
         } catch (e: ProtocolException) {
@@ -77,7 +79,6 @@ open class GetPtxBusJson(var url: String) {
         }
         return response
     }
-
     companion object {
         // 取得當下UTC時間
         val serverTime: String
@@ -87,9 +88,5 @@ open class GetPtxBusJson(var url: String) {
                 dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                 return dateFormat.format(calendar.time)
             }
-    }
-
-    init {
-        response = response
     }
 }

@@ -1,6 +1,7 @@
 package com.example.thenewipad.formatFolder;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusStopRoute {
@@ -423,10 +424,7 @@ public class BusStopRoute {
 
     @Override
     public String toString() {
-        String str = "";
-        for (StopsDTO row: getStops()) {
-            str += getDirection() + "," + getRouteName().Zh_tw + "," + row.toString() + ",";
-        }
-        return str;
+        return getDirection() + getRouteName().Zh_tw + "," + getStops().toString();
     }
+
 }
