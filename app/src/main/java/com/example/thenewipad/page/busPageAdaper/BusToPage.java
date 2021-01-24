@@ -63,7 +63,7 @@ public class BusToPage extends Fragment {
                              Bundle savedInstanceState) {
         //分頁初始化
         View v = inflater.inflate(R.layout.fragment_bus_to_page, container, false);
-        lv = (ListView) v.findViewById(R.id.buslist);
+        lv = v.findViewById(R.id.buslist);
         RequestQueue mQeue = Volley.newRequestQueue(getActivity());
         lv.setNestedScrollingEnabled(true);//滑動效果
         busStop();

@@ -23,16 +23,13 @@ public class BusBackPage extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private ArrayList<Integer> num = new ArrayList<>();
-    private RequestQueue mQeue;
+    private final ArrayList<Integer> num = new ArrayList<>();
 
-    private final String str;
     private ListView lv;
     private final ArrayList<String> buslist;
     private final ArrayList<String> arrivePlantNumb;
 
-    public BusBackPage(String str, ArrayList<String> buslist,ArrayList<String> arrivePlantNumb) {
-        this.str = str;
+    public BusBackPage(String str, ArrayList<String> buslist, ArrayList<String> arrivePlantNumb) {
         this.buslist = buslist;
         this.arrivePlantNumb = arrivePlantNumb;
     }
@@ -62,8 +59,8 @@ public class BusBackPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_bus_back_page, container, false);
-        lv = (ListView) v.findViewById(R.id.buslist);
-        mQeue = Volley.newRequestQueue(getActivity());
+        lv = v.findViewById(R.id.buslist);
+        RequestQueue mQeue = Volley.newRequestQueue(getActivity());
         lv.setNestedScrollingEnabled(true);
         busStop();
         return v;
