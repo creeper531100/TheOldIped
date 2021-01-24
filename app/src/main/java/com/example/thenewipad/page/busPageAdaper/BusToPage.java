@@ -76,7 +76,7 @@ public class BusToPage extends Fragment {
             num.add(R.drawable.bus);
         }
         ProgramAdapter programAdapter =
-                new ProgramAdapter(getContext(), buslist, num, arrivePlantNumb, R.layout.list_page);
+                new ProgramAdapter(getContext(), buslist, num, arrivePlantNumb, R.layout.bus_list_page);
         lv.setAdapter(programAdapter);
     }
 }

@@ -26,20 +26,20 @@ public class BusBackPage extends Fragment {
     private ArrayList<Integer> num = new ArrayList<>();
     private RequestQueue mQeue;
 
-    private String mParam1;
-    private String mParam2;
-    private String str;
+    private final String str;
     private ListView lv;
-    private ArrayList<String> buslist;
+    private final ArrayList<String> buslist;
+    private final ArrayList<String> arrivePlantNumb;
 
-    public BusBackPage(String str, ArrayList<String> buslist) {
+    public BusBackPage(String str, ArrayList<String> buslist,ArrayList<String> arrivePlantNumb) {
         this.str = str;
         this.buslist = buslist;
+        this.arrivePlantNumb = arrivePlantNumb;
     }
 
 
     public static BusBackPage newInstance(String param1, String param2) {
-        BusBackPage fragment = new BusBackPage(null, null);
+        BusBackPage fragment = new BusBackPage(null, null, null);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -51,8 +51,8 @@ public class BusBackPage extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
@@ -75,7 +75,7 @@ public class BusBackPage extends Fragment {
             num.add(R.drawable.bus);
         }
         ProgramAdapter programAdapter =
-                new ProgramAdapter(getContext(), buslist, num, buslist, R.layout.list_page);
+                new ProgramAdapter(getContext(), buslist, num, arrivePlantNumb, R.layout.bus_list_page);
         lv.setAdapter(programAdapter);
     }
 }

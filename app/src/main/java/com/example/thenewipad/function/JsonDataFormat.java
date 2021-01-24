@@ -38,35 +38,28 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
         return contentMap;
     }
 
-    //取到站車牌...
-    public Map<String, String> getPlateNumb() {
-        Type RailStationListType = new TypeToken<ArrayList<BusArriveStop>>() {}.getType();
-        Gson gsonReceiver = new Gson();
-        Map<String, String> contentMap = new HashMap<>();
-        List<BusArriveStop> obj = gsonReceiver.fromJson(response, RailStationListType);
-        for (BusArriveStop row : obj) {
-            contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() +
-                    row.getStopName().getZh_tw() , row.getPlateNumb());
-        }
-        return contentMap;
-    }
-
     //取到站時間...
     public Map<String, String> getRouteTime() {
         Type RailStationListType = new TypeToken<ArrayList<ArriveTime>>() {}.getType();
         Gson gsonReceiver = new Gson();
         Map<String, String> contentMap = new HashMap<>();
-        String d = "";
+        String str = "";
         List<ArriveTime> obj = gsonReceiver.fromJson(response, RailStationListType);
         for (ArriveTime row : obj) {
             if(row.getStopStatus() != 1) { // 1.未發車
-                if (row.getEstimateTime() == 0) // 0.即將抵達
-                    d = "即將抵達";
+                if (row.getEstimateTime() < 130) // 0.即將抵達
+                    str = row.getPlateNumb();
                 else
-                    d = (row.getEstimateTime() / 60) + "分鐘" ;
-            } else
-                d = "未發車";
-            contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() + row.getStopName().getZh_tw() , d);
+                    str = (row.getEstimateTime() / 60) + "分鐘";
+            } else {
+                try {
+                    str = row.getNextBusTime().substring(11,16);
+                } catch (Exception e) {
+                    str = "未發車";
+                }
+            }
+            System.out.println(row.getNextBusTime());
+            contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() + row.getStopName().getZh_tw() , str);
         }
         System.out.println(contentMap);
         return contentMap;
