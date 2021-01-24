@@ -23,7 +23,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,9 +33,12 @@ public class BusPageInfo extends AppCompatActivity {
     String[] contentArrary;
     TabLayout tabLayout;
     String route;
+
     ArrayList<String> To = new ArrayList<>();
-    ArrayList<String> arriveStop = new ArrayList<>();
     ArrayList<String> Back = new ArrayList<>();
+    ArrayList<String> toArriveStop = new ArrayList<>();
+    ArrayList<String> backArriveStop = new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -78,13 +80,6 @@ public class BusPageInfo extends AppCompatActivity {
         Map<String, List<Object>> contentMap = getRouteStop.dataParsingList();
         System.out.println(contentMap);
 
-        //取得抵達車輛
-        JsonDataFormat<BusArriveStop> getRealTimeNearStop = new JsonDataFormat<> (BusArriveStop.class);
-        getRealTimeNearStop.request("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City/Taichung/"+
-                route + "?&$format=JSON");
-        Map<String, String> plateNumbMap = getRealTimeNearStop.getPlateNumb();
-        System.out.println(plateNumbMap);
-
         //取得預估時間
         JsonDataFormat<BusArriveStop> getEstimatedTimeOfArrival= new JsonDataFormat<> (BusArriveStop.class);
         getEstimatedTimeOfArrival.request("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/Taichung/"+
@@ -93,18 +88,18 @@ public class BusPageInfo extends AppCompatActivity {
         System.out.println(arriveTime);
 
         String toSearchKey = "1" + route;
-        String backSearchKey = "1" + route;
+        String backSearchKey = "0" + route;
+
         //製作路線表格
         for(Object row : Objects.requireNonNull(contentMap.get(toSearchKey))) {
             To.add(row.toString());
-            if(plateNumbMap.containsKey(toSearchKey + row.toString())){
-                arriveStop.add(plateNumbMap.get(toSearchKey + row.toString())); //抵達車輛
-            }else
-                arriveStop.add(arriveTime.get(toSearchKey + row.toString()));
+            toArriveStop.add(arriveTime.get(toSearchKey + row.toString()));
         }
-        System.out.println(arriveStop.toString());
-        for(Object row : Objects.requireNonNull(contentMap.get(backSearchKey)))
+
+        for(Object row : Objects.requireNonNull(contentMap.get(backSearchKey))) {
             Back.add(row.toString());
+            backArriveStop.add(arriveTime.get(backSearchKey + row.toString()));
+        }
 
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), direction);
         tabLayout.setupWithViewPager(viewPager);
@@ -124,10 +119,10 @@ public class BusPageInfo extends AppCompatActivity {
             switch (position){
                 case 0:
                     //將父業的資料給子頁
-                    return new BusToPage(route, To, arriveStop);
+                    return new BusToPage(route, To, toArriveStop);
                 case 1:
                     //同上
-                    return new BusBackPage(route, Back);
+                    return new BusBackPage(route, Back, backArriveStop);
             }
             return null;
         }
