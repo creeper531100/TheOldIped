@@ -58,11 +58,8 @@ public class CellularPage extends Fragment {
         stringArrayList.add("901");
 
         for (String s : stringArrayList) {
-            JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>
-                    ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
-                            //RealTimeNearStop, StopOfRoute, Route
-                            + s + "?&$format=JSON", BusRoute.class);
-            getJson.request();
+            JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>(BusRoute.class);
+            getJson.request("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"+ s + "?&$format=JSON");
             dataParsing.add(getJson.dataParsingString(s));
         }
         for (int i = 0; i < dataParsing.size(); i++) {

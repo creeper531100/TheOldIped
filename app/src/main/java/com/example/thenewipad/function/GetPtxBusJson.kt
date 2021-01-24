@@ -20,12 +20,12 @@ import java.util.zip.GZIPInputStream
  * Kotlin分析比較快 */
 
 
-open class GetPtxBusJson(var url: String) {
+open class GetPtxBusJson() {
     @kotlin.jvm.JvmField
     var response = ""
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    fun request(): String {
+    fun request(url: String): String {
         var connection: HttpURLConnection? = null
         val APPID = "8af3b6907d5c443d90b6bd2f18361c15"
         val APPKey = "6f5mGu2y_kH-MaeZ2NKlS0_MDzI"

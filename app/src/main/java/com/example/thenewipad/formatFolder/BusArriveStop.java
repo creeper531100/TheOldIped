@@ -275,7 +275,8 @@ public class BusArriveStop {
     @Override
     public String toString() {
         return Direction + RouteName.Zh_tw + "," + StopName.Zh_tw  + "," + PlateNumb;
-        //[0701, 三村里, EAA-0607]
+        //{0三村里: EAA-822},
+        //{1合作國小: EAA-0603}
     }
 }
 

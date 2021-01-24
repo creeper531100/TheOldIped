@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class BusPageInfo extends AppCompatActivity {
 
@@ -34,8 +35,8 @@ public class BusPageInfo extends AppCompatActivity {
     TabLayout tabLayout;
     String route;
     ArrayList<String> To = new ArrayList<>();
+    ArrayList<String> arriveStop = new ArrayList<>();
     ArrayList<String> Back = new ArrayList<>();
-    ArrayList<String> che = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -69,41 +70,41 @@ public class BusPageInfo extends AppCompatActivity {
         //標題文字設定
         titleText.setText(route);
         busHeaderText.setText(routeContent);
+
         //取得路線資訊
-        JsonDataFormat<BusStopRoute> getJson = new JsonDataFormat<>
-                ("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/"
-                        + route + "?&$format=JSON", BusStopRoute.class);
-        getJson.request();
-        Map<String, List<Object>> contentMap = getJson.dataParsingList(route);
+        JsonDataFormat<BusStopRoute> getRouteStop = new JsonDataFormat<> (BusStopRoute.class);
+        getRouteStop.request("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/"+
+                route + "?&$format=JSON");
+        Map<String, List<Object>> contentMap = getRouteStop.dataParsingList();
+        System.out.println(contentMap);
+
+        //取得抵達車輛
+        JsonDataFormat<BusArriveStop> getRealTimeNearStop = new JsonDataFormat<> (BusArriveStop.class);
+        getRealTimeNearStop.request("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City/Taichung/"+
+                route + "?&$format=JSON");
+        Map<String, String> plateNumbMap = getRealTimeNearStop.getPlateNumb();
+        System.out.println(plateNumbMap);
+
+        //取得預估時間
+        JsonDataFormat<BusArriveStop> getEstimatedTimeOfArrival= new JsonDataFormat<> (BusArriveStop.class);
+        getEstimatedTimeOfArrival.request("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/Taichung/"+
+                route + "?&$format=JSON");
+        Map<String, String> arriveTime = getEstimatedTimeOfArrival.getRouteTime();
+        System.out.println(arriveTime);
+
+        String toSearchKey = "1" + route;
+        String backSearchKey = "1" + route;
         //製作路線表格
-        for(Object row : contentMap.get("1" + route))
+        for(Object row : Objects.requireNonNull(contentMap.get(toSearchKey))) {
             To.add(row.toString());
-        for(Object row : contentMap.get("0" + route))
+            if(plateNumbMap.containsKey(toSearchKey + row.toString())){
+                arriveStop.add(plateNumbMap.get(toSearchKey + row.toString())); //抵達車輛
+            }else
+                arriveStop.add(arriveTime.get(toSearchKey + row.toString()));
+        }
+        System.out.println(arriveStop.toString());
+        for(Object row : Objects.requireNonNull(contentMap.get(backSearchKey)))
             Back.add(row.toString());
-
-        //取得公車目前位置，能動但是可讀性差，未來會做優化
-        JsonDataFormat<BusArriveStop> getPositive = new JsonDataFormat<>
-                ("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City/Taichung/"
-                        + route + "?&$format=JSON", BusArriveStop.class);
-        getPositive.request();
-        Map<Integer, String> arrayList = new HashMap<>();
-
-        List<String> dataParsing = getPositive.dataParsing();
-        for (int i = 0; i< dataParsing.size() ; i+=3) {
-            if(dataParsing.get(i).equals("0" + route)){
-                System.out.println(dataParsing.get(i + 1));
-                arrayList.put(To.indexOf(dataParsing.get(i + 1)), dataParsing.get(i + 2));
-            }
-        }
-        System.out.println(arrayList.toString());
-        for (int i = 0; i < contentMap.get("0" + route).size(); i++) {
-            if(arrayList.containsKey(i)){
-                che.add(arrayList.get(i));
-                System.out.println(i);
-            }
-            che.add("沒車");
-        }
-        System.out.println(che.toString());
 
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), direction);
         tabLayout.setupWithViewPager(viewPager);
@@ -123,7 +124,7 @@ public class BusPageInfo extends AppCompatActivity {
             switch (position){
                 case 0:
                     //將父業的資料給子頁
-                    return new BusToPage(route, To, che);
+                    return new BusToPage(route, To, arriveStop);
                 case 1:
                     //同上
                     return new BusBackPage(route, Back);
