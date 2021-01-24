@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".page.MainActivity">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="55dp"
+        android:fillViewport="true"
+        tools:context=".page.busPageAdaper.BusBackPage">
+
+    </androidx.core.widget.NestedScrollView>
+
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/mainSearchBar"
         android:layout_width="match_parent"
@@ -40,17 +51,6 @@
 
     </com.arlib.floatingsearchview.FloatingSearchView>
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="55dp"
-        android:layout_marginTop="65dp"
-        android:fillViewport="true"
-        tools:context=".page.busPageAdaper.BusBackPage">
-
-    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
