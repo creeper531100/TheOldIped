@@ -50,6 +50,7 @@
                     android:gravity="center"
                     android:text="豐原東站-新建國市場"
                     android:textSize="18sp" />
+
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

@@ -49,6 +49,7 @@ public class PersonPage extends Fragment {
         View v = inflater.inflate(R.layout.person_page, container, false);
         //聲明 BusText
         lv = (ListView) v.findViewById(R.id.weather_list);
+        lv.setNestedScrollingEnabled(true);
         mQeue = Volley.newRequestQueue(getActivity());
         jsonPare();
         return v;
