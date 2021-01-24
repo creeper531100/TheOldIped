@@ -390,4 +390,9 @@ public class BusRoute {
     public String toString() {
         return getRouteName() + "," + getSubRoutes().get(0);
     }
+    /*{
+     * 0701: [三村里, 合作國小...],
+     * 1701: [合作國小, 三村里...]
+     *}
+     */
 }

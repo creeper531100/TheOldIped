@@ -1,5 +1,7 @@
 package com.example.thenewipad.function;
 
+import com.example.thenewipad.formatFolder.ArriveTime;
+import com.example.thenewipad.formatFolder.BusArriveStop;
 import com.example.thenewipad.formatFolder.BusStopRoute;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -14,8 +16,7 @@ import java.util.Map;
 
 public class JsonDataFormat<T> extends GetPtxBusJson {
     Class<T> type;
-    public JsonDataFormat(String url, Class<T> type) {
-        super(url);
+    public JsonDataFormat(Class<T> type) {
         this.type = type;
     }
 
@@ -25,8 +26,8 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
     }
 
 
-    //取路線用，因為分析資料比較雜，所以分開來寫
-    public Map<String, List<Object>> dataParsingList(String searchRoute) {
+    //取路線用...
+    public Map<String, List<Object>> dataParsingList() {
         Type RailStationListType = new TypeToken<ArrayList<BusStopRoute>>() {}.getType();
         Gson gsonReceiver = new Gson();
         Map<String, List<Object>> contentMap = new HashMap<>();
@@ -37,16 +38,48 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
         return contentMap;
     }
 
+    //取到站車牌...
+    public Map<String, String> getPlateNumb() {
+        Type RailStationListType = new TypeToken<ArrayList<BusArriveStop>>() {}.getType();
+        Gson gsonReceiver = new Gson();
+        Map<String, String> contentMap = new HashMap<>();
+        List<BusArriveStop> obj = gsonReceiver.fromJson(response, RailStationListType);
+        for (BusArriveStop row : obj) {
+            contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() +
+                    row.getStopName().getZh_tw() , row.getPlateNumb());
+        }
+        return contentMap;
+    }
+
+    //取到站時間...
+    public Map<String, String> getRouteTime() {
+        Type RailStationListType = new TypeToken<ArrayList<ArriveTime>>() {}.getType();
+        Gson gsonReceiver = new Gson();
+        Map<String, String> contentMap = new HashMap<>();
+        String d = "";
+        List<ArriveTime> obj = gsonReceiver.fromJson(response, RailStationListType);
+        for (ArriveTime row : obj) {
+            if(row.getStopStatus() != 1) { // 1.未發車
+                if (row.getEstimateTime() == 0) // 0.即將抵達
+                    d = "即將抵達";
+                else
+                    d = (row.getEstimateTime() / 60) + "分鐘" ;
+            } else
+                d = "未發車";
+            contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() + row.getStopName().getZh_tw() , d);
+        }
+        System.out.println(contentMap);
+        return contentMap;
+    }
+
     //嚴格搜尋
     public String dataParsingString(String searchRoute) {
         Map<String, String> contentMap = new HashMap<>();
         String[] splitText;
-        if (response != null) {
-            List<T> obj = getDataList();
-            for (T data : obj) {
-                splitText = data.toString().split(",");
-                contentMap.put(splitText[0], splitText[1]);
-            }
+        List<T> obj = getDataList();
+        for (T data : obj) {
+            splitText = data.toString().split(",");
+            contentMap.put(splitText[0], splitText[1]);
         }
         return contentMap.get(searchRoute);
     }
@@ -54,11 +87,9 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
     //寬鬆搜尋，用於顯示搜尋建議
     public List<String> dataParsing() {
         List<String> contentText = new ArrayList<>();
-        if (response != null) {
-            List<T> obj = getDataList();
-            for (T data : obj) {
-                contentText.addAll(Arrays.asList(data.toString().split(",")));
-            }
+        List<T> obj = getDataList();
+        for (T data : obj) {
+            contentText.addAll(Arrays.asList(data.toString().split(",")));
         }
         return contentText;
     }

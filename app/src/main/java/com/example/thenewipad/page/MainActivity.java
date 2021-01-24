@@ -160,11 +160,8 @@ public class MainActivity extends AppCompatActivity {
     private void getRouteData(String inputStr){
         mSuggestions.clear();
         ArrayList<String> title = new ArrayList<>();
-        JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>
-                ("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"
-                        //RealTimeNearStop, StopOfRoute, Route
-                        + inputStr + "?&$format=JSON", BusRoute.class);
-        getJson.request();
+        JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>(BusRoute.class);
+        getJson.request("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"+ inputStr + "?&$format=JSON");
         List<String> dataParsing = getJson.dataParsing();
         for (int i = 0; i< dataParsing.size() ; i+=2) {
             title.add(dataParsing.get(i) + "\n" + dataParsing.get(i+1));
