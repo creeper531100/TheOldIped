@@ -24,6 +24,7 @@ import com.example.thenewipad.function.JsonDataFormat;
 import com.example.thenewipad.page.busPageAdaper.BusPageInfo;
 import com.example.thenewipad.page.mainAdaper.CellularPage;
 import com.example.thenewipad.page.mainAdaper.HomePage;
+import com.example.thenewipad.page.mainAdaper.MapPage;
 import com.example.thenewipad.page.mainAdaper.PersonPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new CellularPage();
                             break;
                         case R.id.nav_setting:
-                            selectedFragment = new HomePage();
+                            selectedFragment = new MapPage();
                             break;
                     }
                     assert selectedFragment != null;
@@ -169,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
         for(String row : title)
             mSuggestions.add(new Suggestion(row));
     }
+
+    //tp6xj/654g4545;4
 
 
 }
