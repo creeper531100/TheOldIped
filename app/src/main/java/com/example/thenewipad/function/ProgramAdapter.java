@@ -51,6 +51,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View singleItem = convertView;
+
         ProgramViewHolder holder = null;
         if (singleItem==null){
             LayoutInflater layoutInflater =
