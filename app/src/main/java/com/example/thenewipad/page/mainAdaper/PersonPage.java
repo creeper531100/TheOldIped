@@ -88,7 +88,8 @@ public class PersonPage extends Fragment {
                         itemList2.add(element.get(3) + "，" + element.get(1) + "\n" + element.get(2) + element.get(4));
                         num.add(weatherIcon(element.get(0)));
                         element.clear();
-                        ProgramAdapter programAdapter = new ProgramAdapter(getContext(), itemList, num, itemList2, R.layout.list_page);
+                        ProgramAdapter programAdapter = new ProgramAdapter(getContext(), itemList, num, itemList2,
+                                R.layout.list_page, itemList);
                         lv.setAdapter(programAdapter);
                     }
                 } catch (JSONException e) {

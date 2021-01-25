@@ -23,7 +23,7 @@ public class MapPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.home_page, container, false);
+        View v = inflater.inflate(R.layout.fragment_map_page, container, false);
 
 
         return v;

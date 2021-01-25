@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
@@ -22,7 +21,7 @@ import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.BusRoute;
 import com.example.thenewipad.function.JsonDataFormat;
 import com.example.thenewipad.page.busPageAdaper.BusPageInfo;
-import com.example.thenewipad.page.mainAdaper.CellularPage;
+import com.example.thenewipad.page.mainAdaper.CellularPagda;
 import com.example.thenewipad.page.mainAdaper.HomePage;
 import com.example.thenewipad.page.mainAdaper.MapPage;
 import com.example.thenewipad.page.mainAdaper.PersonPage;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new PersonPage();
                             break;
                         case R.id.nav_cellular:
-                            selectedFragment = new CellularPage();
+                            selectedFragment = new CellularPagda();
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new MapPage();
@@ -170,8 +169,4 @@ public class MainActivity extends AppCompatActivity {
         for(String row : title)
             mSuggestions.add(new Suggestion(row));
     }
-
-    //tp6xj/654g4545;4
-
-
 }

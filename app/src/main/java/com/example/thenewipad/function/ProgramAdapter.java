@@ -19,7 +19,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     ArrayList<Integer> images;
     ArrayList<String> programName;
     ArrayList<String> programDescription;
-    ArrayList<String> getList = new ArrayList<>();
+    ArrayList<String> getList;
     int page;
 
 
@@ -64,16 +64,18 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         singleItem.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setClickListener(getList);
+                setClickListener();
             }
         });
         return singleItem;
     }
 
-    public void setClickListener(ArrayList<String> getList){
+    public void setClickListener(){
         Intent intent = new Intent(getContext(), ClickListPage.class);
         getContext().startActivity(intent);
         intent.putExtra("getList", getList);
+        getContext().startActivity(intent);
+        System.out.println(getList);
     }
 }
 

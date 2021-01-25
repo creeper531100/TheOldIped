@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CellularPage extends Fragment {
+public class CellularPagda extends Fragment {
     private RequestQueue mQeue;
     private ListView lv;
     private EditText search;
@@ -66,7 +66,8 @@ public class CellularPage extends Fragment {
             num.add(R.drawable.ic_baseline_search_24);
         }
         ProgramAdapter programAdapter =
-                new ProgramAdapter(getContext(), stringArrayList, num, dataParsing, R.layout.list_page);
+                new ProgramAdapter(getContext(), stringArrayList, num,
+                        dataParsing, R.layout.list_page);
         lv.setAdapter(programAdapter);
     }
 }
