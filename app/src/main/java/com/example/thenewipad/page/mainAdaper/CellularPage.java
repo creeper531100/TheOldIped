@@ -42,7 +42,7 @@ public class CellularPage extends Fragment {
         lv = (ListView) v.findViewById(R.id.buslist);
         mQeue = Volley.newRequestQueue(getActivity());
         busStop();
-        return v;
+        return v; // a
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
