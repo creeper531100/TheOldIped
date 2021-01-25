@@ -16,15 +16,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
+import com.example.thenewipad.formatFolder.BusStopRoute;
+import com.example.thenewipad.formatFolder.weatherFormat;
 import com.example.thenewipad.function.ProgramAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 public class PersonPage extends Fragment {
     private ArrayList<String> itemList = new ArrayList<String>();
@@ -56,6 +64,7 @@ public class PersonPage extends Fragment {
     }
 
     private void jsonPare() {
+        ArrayList<String> dataArraryList = new ArrayList<>();
         String url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-AA4F530E-BC88-47F9-8D50-BFAAB1B0233B&format=JSON";
         String[] title = {"", "降雨機率: ", "溫度: ", "", "~"};
         String[] unit = {"", "%", "°C", "", "°C"};
@@ -66,7 +75,20 @@ public class PersonPage extends Fragment {
                 ArrayList<String> element = new ArrayList<String>();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+
+                    //大報社經
+                    String dick = String.valueOf(jsonObject.toString());
+                    Type weatherFormatData = new TypeToken<ArrayList<weatherFormat>>() {}.getType();
+                    Gson gsonReceiver = new Gson();
+                    weatherFormat dicker = gsonReceiver.fromJson(dick, weatherFormat.class);
+                    String injing = dicker.getRecords().getLocation()
+                            .get(0).getWeatherElement().get(0)
+                            .getTime().get(0).getParameter().getParameterName().toString();
+                    System.out.println(injing);
+
+
                     // JSONObject 挖出大括號 ， JSONArray挖中括號
+                    System.out.println(jsonObject);
                     JSONObject data = jsonObject.getJSONObject("records");
                     JSONArray records = data.getJSONArray("location");
 
