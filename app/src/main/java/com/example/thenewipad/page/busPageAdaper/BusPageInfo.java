@@ -78,14 +78,14 @@ public class BusPageInfo extends AppCompatActivity {
         getRouteStop.request("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/Taichung/"+
                 route + "?&$format=JSON");
         Map<String, List<Object>> contentMap = getRouteStop.dataParsingList();
-        System.out.println(contentMap);
+
 
         //取得預估時間
         JsonDataFormat<BusArriveStop> getEstimatedTimeOfArrival= new JsonDataFormat<> (BusArriveStop.class);
         getEstimatedTimeOfArrival.request("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/Taichung/"+
                 route + "?&$format=JSON");
         Map<String, String> arriveTime = getEstimatedTimeOfArrival.getRouteTime();
-        System.out.println(arriveTime);
+
 
         String toSearchKey = "1" + route;
         String backSearchKey = "0" + route;

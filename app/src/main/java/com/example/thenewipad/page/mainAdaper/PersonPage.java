@@ -65,37 +65,39 @@ public class PersonPage extends Fragment {
     }
 
     private void jsonPare() {
-        ArrayList<String> dataArraryList = new ArrayList<>();
         String url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-AA4F530E-BC88-47F9-8D50-BFAAB1B0233B&format=JSON";
 
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ArrayList<String> weatherElementList = new ArrayList<>();
+
+                Map<String, ArrayList<String>> weatherElementDict = new HashMap<>();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String getJsonFormatFile = jsonObject.toString();
                     Gson gsonReceiver = new Gson();
                     weatherFormat formatObj = gsonReceiver.fromJson(getJsonFormatFile, weatherFormat.class);
                     for (weatherFormat.RecordsDTO.LocationDTO getLoaction : formatObj.getRecords().getLocation()){
-                        weatherElementList.add(getLoaction.getLocationName());
+                        ArrayList<String> weatherElementList = new ArrayList<>();
                         for(weatherFormat.RecordsDTO.LocationDTO.WeatherElementDTO getWeatherElement
                                 : getLoaction.getWeatherElement()){
                             weatherElementList.add(getWeatherElement.getTime().get(0).getParameter().getParameterName());
                         }
+                        weatherElementDict.put(getLoaction.getLocationName(), weatherElementList);
                     }
 
-                    for (int i = 0; i < weatherElementList.size(); i+=6) {
-                        itemList.add(weatherElementList.get(i) + "  "+ weatherElementList.get(i+1));
-                        itemList2.add(weatherElementList.get(i+4) + "，降雨機率: " + weatherElementList.get(i+2) +"%" +
-                                "\n氣溫: " + weatherElementList.get(i+3) + "度 ~ " +weatherElementList.get(i+5) + "度");
-                        num.add(R.drawable.cloud);
-                    }
 
-                    System.out.println(weatherElementList);
-
+                    weatherElementDict.forEach(new BiConsumer<String, ArrayList<String>>() {
+                        @Override
+                        public void accept(String s, ArrayList<String> strings) {
+                            itemList.add(s + "  " + strings.get(0));
+                            itemList2.add(strings.get(3) + ", 降雨機率" + strings.get(1) + "%\n"
+                            + "氣溫: " + strings.get(2) + "度 ~ " + strings.get(4) + "度");
+                            num.add(R.drawable.cloud);
+                        }
+                    });
                         ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
-                                R.layout.list_page);
+                                R.layout.list_page, weatherElementDict);
                         lv.setAdapter(programAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

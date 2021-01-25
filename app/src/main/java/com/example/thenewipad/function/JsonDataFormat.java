@@ -58,10 +58,8 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
                     str = "未發車";
                 }
             }
-            System.out.println(row.getNextBusTime());
             contentMap.put(row.getDirection() + row.getRouteName().getZh_tw() + row.getStopName().getZh_tw() , str);
         }
-        System.out.println(contentMap);
         return contentMap;
     }
 

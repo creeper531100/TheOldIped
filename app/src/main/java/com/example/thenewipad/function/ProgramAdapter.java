@@ -12,26 +12,29 @@ import android.widget.TextView;
 import com.example.thenewipad.R;
 import com.example.thenewipad.page.mainAdaper.ClickListPage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProgramAdapter extends ArrayAdapter<String> {
     Context context;
     ArrayList<Integer> images;
     ArrayList<String> programName;
     ArrayList<String> programDescription;
-    ArrayList<String> getList;
+    Map<String, ArrayList<String>> getDict;
     int page;
 
 
     public ProgramAdapter(Context context, ArrayList<String> programName, ArrayList<Integer> images,
-                          ArrayList<String> programDescription, int page, ArrayList<String> getList) {
+                          ArrayList<String> programDescription, int page, Map<String, ArrayList<String>> getDict) {
         super(context, page, R.id.textView, programName);
         this.context = context;
         this.images = images;
         this.programName = programName;
         this.page = page;
         this.programDescription = programDescription;
-        this.getList = getList;
+        this.getDict = getDict;
     }
 
     public ProgramAdapter(Context context, ArrayList<String> programName, ArrayList<Integer> images,
@@ -64,18 +67,17 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         singleItem.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setClickListener();
+                setClickListener(programName.get(position).split("\\s+")[0]);
             }
         });
         return singleItem;
     }
 
-    public void setClickListener(){
-        Intent intent = new Intent(getContext(), ClickListPage.class);
-        getContext().startActivity(intent);
-        intent.putExtra("getList", getList);
-        getContext().startActivity(intent);
-        System.out.println(getList);
+    public void setClickListener(String clickListener){
+        Intent inte = new Intent(getContext(), ClickListPage.class);
+        inte.putExtra("getDict",(Serializable) getDict);
+        inte.putExtra("clickListener", clickListener);
+        getContext().startActivity(inte);
     }
 }
 
