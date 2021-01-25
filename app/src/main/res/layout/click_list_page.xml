@@ -31,6 +31,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/city_title"
                     android:layout_width="match_parent"
                     android:layout_height="76dp"
                     android:fontFamily="@font/ubuntu_light"
@@ -40,6 +41,7 @@
                     android:textSize="48sp" />
 
                 <TextView
+                    android:id="@+id/weather_content"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
