@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class PersonPage extends Fragment {
     private ArrayList<String> itemList = new ArrayList<String>();
@@ -66,54 +67,36 @@ public class PersonPage extends Fragment {
     private void jsonPare() {
         ArrayList<String> dataArraryList = new ArrayList<>();
         String url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-AA4F530E-BC88-47F9-8D50-BFAAB1B0233B&format=JSON";
-        String[] title = {"", "降雨機率: ", "溫度: ", "", "~"};
-        String[] unit = {"", "%", "°C", "", "°C"};
 
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ArrayList<String> element = new ArrayList<String>();
+                ArrayList<String> weatherElementList = new ArrayList<>();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-
-                    //大報社經
-                    String dick = String.valueOf(jsonObject.toString());
-                    Type weatherFormatData = new TypeToken<ArrayList<weatherFormat>>() {}.getType();
+                    String getJsonFormatFile = jsonObject.toString();
                     Gson gsonReceiver = new Gson();
-                    weatherFormat dicker = gsonReceiver.fromJson(dick, weatherFormat.class);
-                    String injing = dicker.getRecords().getLocation()
-                            .get(0).getWeatherElement().get(0)
-                            .getTime().get(0).getParameter().getParameterName().toString();
-                    System.out.println(injing);
-
-
-                    // JSONObject 挖出大括號 ， JSONArray挖中括號
-                    System.out.println(jsonObject);
-                    JSONObject data = jsonObject.getJSONObject("records");
-                    JSONArray records = data.getJSONArray("location");
-
-                    //第一層
-                    for (int i = 0; i < records.length(); i++) {
-                        JSONObject location = records.getJSONObject(i);
-                        String locationName = location.getString("locationName");
-
-                        //第二層
-                        JSONArray weatherElement = location.getJSONArray("weatherElement");
-                        for (int j = 0; j < weatherElement.length(); j++) {
-                            JSONObject elementName = weatherElement.getJSONObject(j);
-                            JSONArray time = elementName.getJSONArray("time");
-                            JSONObject parameter = time.getJSONObject(0);
-                            JSONObject parameterName = parameter.getJSONObject("parameter");
-                            element.add(title[j] + parameterName.getString("parameterName") + unit[j]);
+                    weatherFormat formatObj = gsonReceiver.fromJson(getJsonFormatFile, weatherFormat.class);
+                    for (weatherFormat.RecordsDTO.LocationDTO getLoaction : formatObj.getRecords().getLocation()){
+                        weatherElementList.add(getLoaction.getLocationName());
+                        for(weatherFormat.RecordsDTO.LocationDTO.WeatherElementDTO getWeatherElement
+                                : getLoaction.getWeatherElement()){
+                            weatherElementList.add(getWeatherElement.getTime().get(0).getParameter().getParameterName());
                         }
-                        itemList.add(locationName + " " + element.get(0));
-                        itemList2.add(element.get(3) + "，" + element.get(1) + "\n" + element.get(2) + element.get(4));
-                        num.add(weatherIcon(element.get(0)));
-                        element.clear();
-                        ProgramAdapter programAdapter = new ProgramAdapter(getContext(), itemList, num, itemList2,
-                                R.layout.list_page, itemList);
-                        lv.setAdapter(programAdapter);
                     }
+
+                    for (int i = 0; i < weatherElementList.size(); i+=6) {
+                        itemList.add(weatherElementList.get(i) + "  "+ weatherElementList.get(i+1));
+                        itemList2.add(weatherElementList.get(i+4) + "，降雨機率: " + weatherElementList.get(i+2) +"%" +
+                                "\n氣溫: " + weatherElementList.get(i+3) + "度 ~ " +weatherElementList.get(i+5) + "度");
+                        num.add(R.drawable.cloud);
+                    }
+
+                    System.out.println(weatherElementList);
+
+                        ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
+                                R.layout.list_page);
+                        lv.setAdapter(programAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

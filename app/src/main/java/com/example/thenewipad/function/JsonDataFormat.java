@@ -46,8 +46,8 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
         String str = "";
         List<ArriveTime> obj = gsonReceiver.fromJson(response, RailStationListType);
         for (ArriveTime row : obj) {
-            if(row.getStopStatus() != 1) { // 1.未發車
-                if (row.getEstimateTime() < 130) // 0.即將抵達
+            if(row.getStopStatus() != 1) { //1.未發車
+                if (row.getEstimateTime() < 130) //0.即將抵達
                     str = row.getPlateNumb();
                 else
                     str = (row.getEstimateTime() / 60) + "分鐘";
