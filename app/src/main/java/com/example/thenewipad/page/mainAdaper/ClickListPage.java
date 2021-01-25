@@ -28,7 +28,7 @@ public class ClickListPage extends AppCompatActivity {
         title.setText(clickListener);
         contentArray = hashMap.get(clickListener);
         weather_content.setText(contentArray.toString());
-
+        //TEST
 
     }
 }
