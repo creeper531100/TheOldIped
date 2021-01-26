@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -42,13 +44,25 @@ public class ClickListPage extends AppCompatActivity {
         String highTemp = contentArray.get(4);
         int averageTemp = (Integer.parseInt(lowTemp) + Integer.parseInt(highTemp)) / 2;
 
-
         TextView city = (TextView) findViewById(R.id.city_title);
         TextView weatherStatusText = (TextView) findViewById(R.id.weather_status);
         TextView weatherAllStatus = (TextView) findViewById(R.id.weather_all_status);
         TextView temper = (TextView) findViewById(R.id.temper);
         TextView timeSet = (TextView) findViewById(R.id.showTimeinWeather);
         ImageView imageView = (ImageView) findViewById(R.id.imageView2);
+        ImageView backGroundImage = (ImageView) findViewById(R.id.imageView1);
+        String ante = (new SimpleDateFormat("a")).format(date);
+
+
+        Object colors = Color.rgb(255, 255, 255);
+        if(ante.equals("下午")) {
+            colors = Color.rgb(0, 0, 0);
+            backGroundImage.setImageResource(R.drawable.weather_sun_backgurond);
+        }else
+            backGroundImage.setImageResource(R.drawable.weather_background);
+
+        weatherStatusText.setTextColor((int) colors);
+
         String sdf = (new SimpleDateFormat("M月D日 EE HH:mm")).format(date);
 
         System.out.println(hashMap);
