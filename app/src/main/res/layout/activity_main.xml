@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".page.MainActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="65dp"
         android:layout_marginBottom="55dp"
-        android:fillViewport="true"
         tools:context=".page.busPageAdaper.BusBackPage">
 
-    </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
 
     <com.arlib.floatingsearchview.FloatingSearchView
         android:id="@+id/mainSearchBar"

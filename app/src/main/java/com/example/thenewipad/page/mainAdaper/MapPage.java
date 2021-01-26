@@ -19,12 +19,14 @@ import java.util.Date;
 
 public class MapPage extends Fragment {
 
+    Date date = new Date();
+    TextView showTime;
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_map_page, container, false);
-
+        View v = inflater.inflate(R.layout.fragment_maps, container, false);
 
         return v;
     }

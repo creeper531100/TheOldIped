@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=3D:F8:13:F3:26:C1:06:33:C9:29:18:77:25:1B:EA:14:7B:7C:76:F2%3Bcom.example.thenewipad.page.mainAdaper
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.thenewipad.page.mainAdaper
+
+    SHA-1 certificate fingerprint:
+    3D:F8:13:F3:26:C1:06:33:C9:29:18:77:25:1B:EA:14:7B:7C:76:F2
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCkiWXL3DBWzYkpSMqoYWtXA1vuqj980k4</string>
+</resources>
