@@ -7,67 +7,58 @@
     tools:context=".page.mainAdaper.ClickListPage"
     app:layout_scrollFlags="scroll">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="?attr/colorPrimary"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:minHeight="?attr/actionBarSize"
-            android:paddingEnd="15dp"
-            android:theme="?attr/actionBarTheme"
-            app:buttonGravity="center_vertical"
-            app:title="">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/city_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="76dp"
-                    android:fontFamily="@font/ubuntu_light"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
-                    android:text="台中市"
-                    android:textSize="48sp" />
-
-                <TextView
-                    android:id="@+id/weather_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/ubuntu_light"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
-                    android:text="大致晴朗"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        android:scaleType="centerCrop"
+        android:src="@drawable/weather_background" />
 
-        <TextView
-            android:id="@+id/contentText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/city_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="45dp"
+        android:fontFamily="@font/ubuntu_light"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="台中市"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/weather_status"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="145dp"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="大致晴朗"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/temper"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="25°C"
+        android:textSize="72dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="right"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="25dp"
+        tools:srcCompat="@drawable/tai_yang_yun" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

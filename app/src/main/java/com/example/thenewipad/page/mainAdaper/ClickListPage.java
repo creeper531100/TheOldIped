@@ -25,17 +25,16 @@ public class ClickListPage extends AppCompatActivity {
                 = (HashMap<String, ArrayList<String>>) intent.getSerializableExtra("getDict");
         String clickListener = intent.getStringExtra("clickListener");
         System.out.println(clickListener);
-        TextView title = (TextView) findViewById(R.id.city_title);
-        TextView weather_content = (TextView) findViewById(R.id.weather_content);
-        TextView contentText = (TextView) findViewById(R.id.contentText);
-        title.setText(clickListener);
+        TextView city = (TextView) findViewById(R.id.city_title);
+        TextView weatherStatus = (TextView) findViewById(R.id.weather_status);
+        TextView temper = (TextView) findViewById(R.id.temper);
+        city.setText(clickListener);
         contentArray = hashMap.get(clickListener);
-        weather_content.setText(contentArray.toString());
-        //TEST
-        StringBuilder con = new StringBuilder();
-        for (String a: contentArray) {
-            con.append(a).append("\n");
-        }
-        contentText.setText(con.toString());
+        weatherStatus.setText(contentArray.get(0)); // 天氣狀態
+        String lowTemp = contentArray.get(2);
+        String highTemp = contentArray.get(4);
+        int averageTemp = (Integer.parseInt(lowTemp) + Integer.parseInt(highTemp)) / 2;
+        temper.setText(averageTemp + "°C"); //設定溫度
+
     }
 }
