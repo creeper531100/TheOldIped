@@ -53,15 +53,11 @@ public class ClickListPage extends AppCompatActivity {
         ImageView backGroundImage = (ImageView) findViewById(R.id.imageView1);
         String ante = (new SimpleDateFormat("a")).format(date);
 
-
-        Object colors = Color.rgb(255, 255, 255);
-        if(ante.equals("下午")) {
-            colors = Color.rgb(0, 0, 0);
+        if(ante.equals("上午")) {
             backGroundImage.setImageResource(R.drawable.weather_sun_backgurond);
         }else
             backGroundImage.setImageResource(R.drawable.weather_background);
 
-        weatherStatusText.setTextColor((int) colors);
 
         String sdf = (new SimpleDateFormat("M月D日 EE HH:mm")).format(date);
 
