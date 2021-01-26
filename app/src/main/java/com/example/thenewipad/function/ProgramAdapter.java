@@ -35,7 +35,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         this.page = page;
         this.programDescription = programDescription;
         this.getDict = getDict;
-    }
+    }//AA志
 
     public ProgramAdapter(Context context, ArrayList<String> programName, ArrayList<Integer> images,
                           ArrayList<String> programDescription, int page) {
