@@ -93,7 +93,7 @@ public class PersonPage extends Fragment {
                             itemList.add(s + "  " + strings.get(0));
                             itemList2.add(strings.get(3) + ", 降雨機率" + strings.get(1) + "%\n"
                             + "氣溫: " + strings.get(2) + "度 ~ " + strings.get(4) + "度");
-                            num.add(R.drawable.cloud);
+                            num.add(getWeatherIcon(strings.get(0)));
                         }
                     });
                         ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
@@ -111,15 +111,22 @@ public class PersonPage extends Fragment {
 
         mQeue.add(request);
     }
-    private int weatherIcon(String str){
-        Dictionary<String, Integer> weatherStatus = new Hashtable<String, Integer>();
-        weatherStatus.put("晴時多雲", R.drawable.cloud);
-        weatherStatus.put("多雲時陰短暫雨", R.drawable.rain);
-        weatherStatus.put("陰短暫雨", R.drawable.rain);
-        weatherStatus.put("陰時多雲短暫雨", R.drawable.rain);
-        if(weatherStatus.get(str) != null)
-            return weatherStatus.get(str);
-        else
+    int getWeatherIcon(String status){
+        if(status.contains("晴時") || status.contains("時晴") ){
+            return R.drawable.tai_yang_yun;
+        } else if(status.contains("雷")){
+            return R.drawable.lei_yu;
+        } else if(status.contains("雨")){
+            return R.drawable.xia_yu;
+        } else if(status.contains("晴")){
+            return R.drawable.tai_yang;
+        } else if(status.contains("霧")){
+            return R.drawable.rain;
+        } else if(status.contains("風")){
+            return R.drawable.qiang_feng;
+        }else if(status.contains("雲")){
+            return R.drawable.cloud;
+        }else
             return R.drawable.weathererror;
     }
 }
