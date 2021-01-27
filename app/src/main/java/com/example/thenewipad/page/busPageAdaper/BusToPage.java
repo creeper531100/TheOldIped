@@ -57,7 +57,7 @@ public class BusToPage extends Fragment {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class BusToPage extends Fragment {
         return v;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void busStop() {
         for (int i = 0; i < buslist.size(); i++) {
             num.add(R.drawable.bus);

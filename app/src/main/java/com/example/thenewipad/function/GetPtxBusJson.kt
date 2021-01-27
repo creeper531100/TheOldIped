@@ -24,7 +24,6 @@ open class GetPtxBusJson() {
     @kotlin.jvm.JvmField
     var response = ""
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     fun request(url: String): String {
         var connection: HttpURLConnection? = null
         val APPID = "8af3b6907d5c443d90b6bd2f18361c15"
@@ -34,7 +33,7 @@ open class GetPtxBusJson() {
         var respond = ""
         var Signature = ""
         try {
-            Signature = HMAC_SHA1.Signature(SignDate, APPKey)
+            Signature = HMAC_SHA1.Signature(SignDate, APPKey).toString()
         } catch (e1: SignatureException) {
             e1.printStackTrace()
         }

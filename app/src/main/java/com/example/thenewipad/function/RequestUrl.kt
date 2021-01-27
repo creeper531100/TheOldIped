@@ -1,12 +1,11 @@
 package com.example.thenewipad.function
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.util.Base64
+import android.util.Base64.encodeToString
 import java.security.SignatureException
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
-import java.util.*
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import javax.net.ssl.*
@@ -15,23 +14,18 @@ import javax.net.ssl.*
  * 這個不是我寫的
  * Kotlin分析比較快 */
 
-internal object HMAC_SHA1 {
-    @RequiresApi(api = Build.VERSION_CODES.O)
+object HMAC_SHA1 {
     @Throws(SignatureException::class)
-    fun Signature(xData: String, AppKey: String): String {
+    open fun Signature(xData: String, AppKey: String): String? {
         return try {
-            val encoder = Base64.getEncoder()
-            // get an hmac_sha1 key from the raw key bytes
             val signingKey = SecretKeySpec(AppKey.toByteArray(charset("UTF-8")), "HmacSHA1")
-
-            // get an hmac_sha1 Mac instance and initialize with the signing key
             val mac = Mac.getInstance("HmacSHA1")
             mac.init(signingKey)
-
-            // compute the hmac on input data bytes
             val rawHmac = mac.doFinal(xData.toByteArray(charset("UTF-8")))
-            encoder.encodeToString(rawHmac)
-        } catch (e: Exception) {
+            var result = encodeToString(rawHmac, Base64.DEFAULT) //這行要改成這樣，不然就只能在 Andorid 8.0 才能使用
+            result = result.replace("\n", "") // 要加這一行，不然會認證失敗
+            result
+        } catch (e: java.lang.Exception) {
             throw SignatureException("Failed to generate HMAC : " + e.message)
         }
     }

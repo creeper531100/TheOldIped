@@ -33,7 +33,7 @@ public class CellularPagda extends Fragment {
     private EditText search;
     private Button searchBtn;
     private ArrayList<Integer> num = new ArrayList<Integer>();
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -45,7 +45,7 @@ public class CellularPagda extends Fragment {
         return v; // a
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     public void busStop() {
         ArrayList<String> stringArrayList = new ArrayList<>();
         ArrayList<String> dataParsing = new ArrayList<>();

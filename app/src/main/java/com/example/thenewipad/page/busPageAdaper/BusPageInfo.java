@@ -40,7 +40,7 @@ public class BusPageInfo extends AppCompatActivity {
     ArrayList<String> backArriveStop = new ArrayList<>();
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

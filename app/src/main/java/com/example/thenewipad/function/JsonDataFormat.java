@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 
 public class JsonDataFormat<T> extends GetPtxBusJson {
@@ -76,8 +77,8 @@ public class JsonDataFormat<T> extends GetPtxBusJson {
     }
 
     //寬鬆搜尋，用於顯示搜尋建議
-    public List<String> dataParsing() {
-        List<String> contentText = new ArrayList<>();
+    public Vector<String> dataParsing() {
+        Vector<String> contentText = new Vector<>();
         List<T> obj = getDataList();
         for (T data : obj) {
             contentText.addAll(Arrays.asList(data.toString().split(",")));

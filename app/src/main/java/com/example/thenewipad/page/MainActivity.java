@@ -8,6 +8,8 @@ import android.os.Parcel;
 import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,9 +33,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
     FloatingSearchView search;
     private final List<Suggestion> mSuggestions =new ArrayList<>();
@@ -42,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         search = (FloatingSearchView) findViewById(R.id.mainSearchBar);
         search.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSearchTextChanged(String oldQuery, String newQuery) {
                 if (!oldQuery.equals("") && newQuery.equals("")) {
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> title = new ArrayList<>();
         JsonDataFormat<BusRoute> getJson = new JsonDataFormat<>(BusRoute.class);
         getJson.request("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/Taichung/"+ inputStr + "?&$format=JSON");
-        List<String> dataParsing = getJson.dataParsing();
+        Vector<String> dataParsing = getJson.dataParsing();
         for (int i = 0; i< dataParsing.size() ; i+=2) {
             title.add(dataParsing.get(i) + "\n" + dataParsing.get(i+1));
         }

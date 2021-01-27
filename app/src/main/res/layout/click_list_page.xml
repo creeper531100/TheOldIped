@@ -32,7 +32,7 @@
             android:layout_marginTop="45dp"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.thenewipad.function.StrokeTextView
                 android:id="@+id/city_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
-            <TextView
+            <com.example.thenewipad.function.StrokeTextView
                 android:id="@+id/showTimeinWeather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <TextView
+            <com.example.thenewipad.function.StrokeTextView
                 android:id="@+id/temper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:textColor="@color/white"
                 android:textSize="72dp" />
 
-            <TextView
+            <com.example.thenewipad.function.StrokeTextView
                 android:id="@+id/weather_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +83,66 @@
             android:scaleType="centerInside"
             tools:srcCompat="@drawable/tai_yang_yun" />
 
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="bottom"
+                    android:text="目前天氣詳細資料"
+                    android:textColor="#F3EFEF" />
+
+                <com.example.thenewipad.function.StrokeTextView
+                    android:id="@+id/updata_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:text="更新日期: 2021-01-27 18:00:00"
+                    android:textColor="#F3EFEF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.example.thenewipad.function.StrokeTextView
+                        android:id="@+id/measures"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="0.5"
+                        android:text="最高氣溫\n最低氣溫\n天氣狀態\n體感\n降雨機率\n空氣品質"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                    <com.example.thenewipad.function.StrokeTextView
+                        android:id="@+id/weather_all_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="25dp"
+                        android:layout_weight="0.5"
+                        android:text="27°C　\n16°C　\n好 \n濕冷　\n20%　\n商可　"
+                        android:textColor="@color/white" />
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -96,56 +155,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/injing"
-
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_weight="0.1"
-                android:gravity="bottom"
-                android:text="目前天氣詳細資料"
-                android:textColor="#F3EFEF" />
-
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
+                app:title="未來一週天氣"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1">
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="0.5"
-                    android:text="最高氣溫\n最低氣溫\n天氣狀態\n體感\n降雨機率\n空氣品質"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/weather_all_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_weight="0.5"
-                    android:text="27°C　\n16°C　\n好 \n濕冷　\n20%　\n商可　"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView3"
+            <ListView
+                android:id="@+id/future_weather_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/bus" />
+                android:layout_height="match_parent">
 
+            </ListView>
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
