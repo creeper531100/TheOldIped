@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.BusStopRoute;
 import com.example.thenewipad.formatFolder.weatherFormat;
+import com.example.thenewipad.formatFolder.weatherFormatt;
 import com.example.thenewipad.function.ProgramAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -63,7 +64,6 @@ public class PersonPage extends Fragment {
         jsonPare();
         return v;
     }
-
     private void jsonPare() {
         String url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-AA4F530E-BC88-47F9-8D50-BFAAB1B0233B&format=JSON";
 
@@ -72,36 +72,30 @@ public class PersonPage extends Fragment {
             public void onResponse(String response) {
 
                 Map<String, ArrayList<String>> weatherElementDict = new HashMap<>();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String getJsonFormatFile = jsonObject.toString();
-                    Gson gsonReceiver = new Gson();
-                    weatherFormat formatObj = gsonReceiver.fromJson(getJsonFormatFile, weatherFormat.class);
-                    for (weatherFormat.RecordsDTO.LocationDTO getLoaction : formatObj.getRecords().getLocation()){
-                        ArrayList<String> weatherElementList = new ArrayList<>();
-                        for(weatherFormat.RecordsDTO.LocationDTO.WeatherElementDTO getWeatherElement
-                                : getLoaction.getWeatherElement()){
-                            weatherElementList.add(getWeatherElement.getTime().get(0).getParameter().getParameterName());
-                        }
-                        weatherElementDict.put(getLoaction.getLocationName(), weatherElementList);
+                Gson gsonReceiver = new Gson();
+                weatherFormat formatObj = gsonReceiver.fromJson(response, weatherFormat.class);
+                for (weatherFormat.RecordsDTO.LocationDTO getLoaction : formatObj.getRecords().getLocation()){
+                    ArrayList<String> weatherElementList = new ArrayList<>();
+                    for(weatherFormat.RecordsDTO.LocationDTO.WeatherElementDTO getWeatherElement
+                            : getLoaction.getWeatherElement()){
+                        weatherElementList.add(getWeatherElement.getTime().get(0).getParameter().getParameterName());
                     }
-
-
-                    weatherElementDict.forEach(new BiConsumer<String, ArrayList<String>>() {
-                        @Override
-                        public void accept(String s, ArrayList<String> strings) {
-                            itemList.add(s + "  " + strings.get(0));
-                            itemList2.add(strings.get(3) + ", 降雨機率" + strings.get(1) + "%\n"
-                            + "氣溫: " + strings.get(2) + "度 ~ " + strings.get(4) + "度");
-                            num.add(getWeatherIcon(strings.get(0)));
-                        }
-                    });
-                        ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
-                                R.layout.list_page, weatherElementDict);
-                        lv.setAdapter(programAdapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    weatherElementDict.put(getLoaction.getLocationName(), weatherElementList);
                 }
+
+
+                weatherElementDict.forEach(new BiConsumer<String, ArrayList<String>>() {
+                    @Override
+                    public void accept(String s, ArrayList<String> strings) {
+                        itemList.add(s + "  " + strings.get(0));
+                        itemList2.add(strings.get(3) + ", 降雨機率" + strings.get(1) + "%\n"
+                                + "氣溫: " + strings.get(2) + "度 ~ " + strings.get(4) + "度");
+                        num.add(getWeatherIcon(strings.get(0)));
+                    }
+                });
+                ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
+                        R.layout.list_page, weatherElementDict);
+                lv.setAdapter(programAdapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -111,6 +105,7 @@ public class PersonPage extends Fragment {
 
         mQeue.add(request);
     }
+
     int getWeatherIcon(String status){
         if(status.contains("晴時") || status.contains("時晴") ){
             return R.drawable.tai_yang_yun;
