@@ -8,4 +8,10 @@
     android:layout_height="match_parent"
     tools:context=".page.mainAdaper.MapPage" >
 
+    <Button
+        android:id="@+id/btn"
+        android:text="Display in Google map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </fragment>
