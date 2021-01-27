@@ -129,11 +129,14 @@ public class WeatherInfoPage extends AppCompatActivity {
         ImageView backGroundImage = (ImageView) findViewById(R.id.imageView1);
         @SuppressLint("SimpleDateFormat") String ante = (new SimpleDateFormat("a")).format(date);
 
+        int r = (int)(Math.random() * 2);
+
         if(ante.equals("上午")) {
             backGroundImage.setImageResource(R.drawable.weather_background0);
-        }else
+        }else if(r == 0){
             backGroundImage.setImageResource(R.drawable.weather_background);
-
+        } else
+            backGroundImage.setImageResource(R.drawable.weather_background_night);
 
         @SuppressLint("SimpleDateFormat") String sdf = (new SimpleDateFormat("M月D日 EE HH:mm")).format(date);
         @SuppressLint("SimpleDateFormat") String getNowDate = (new SimpleDateFormat("M月D日")).format(date);

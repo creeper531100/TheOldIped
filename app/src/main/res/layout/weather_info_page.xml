@@ -22,8 +22,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/weather_background" />
+                android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,7 +31,7 @@
             android:layout_marginTop="45dp"
             android:orientation="vertical">
 
-            <com.example.thenewipad.function.StrokeTextView
+            <TextView
                 android:id="@+id/city_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +42,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
-            <com.example.thenewipad.function.StrokeTextView
+            <TextView
                 android:id="@+id/showTimeinWeather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
-            <com.example.thenewipad.function.StrokeTextView
+            <TextView
                 android:id="@+id/temper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +59,7 @@
                 android:textColor="@color/white"
                 android:textSize="72dp" />
 
-            <com.example.thenewipad.function.StrokeTextView
+            <TextView
                 android:id="@+id/weather_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,7 +90,7 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
-                <TextView
+                <com.example.thenewipad.function.StrokeTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
