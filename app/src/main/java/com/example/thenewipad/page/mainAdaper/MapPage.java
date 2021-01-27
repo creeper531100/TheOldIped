@@ -103,13 +103,14 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                                         26.160302588286946, 119.95133231785832};
                 String city[] = {"新北市","台中市","高雄市","台北市","桃園市","台南市","彰化縣","屏東縣","雲林縣","新竹縣","苗栗縣",
                 "嘉義縣","南投縣","宜蘭縣","新竹市","基隆市","花蓮縣","嘉義市","台東縣","金門縣","澎湖縣","連江縣"};
-
                 for(int i = 0 ; i < 22;i+=2){
+                    ArrayList<Double> arr =  new ArrayList<>();
                     Double[] d ={coordinate[i],coordinate[i+1]};
-                    ArrayList<Double> arr = (ArrayList<Double>) Arrays.asList(d);
+                    arr.add(coordinate[i]);
+                    arr.add(coordinate[i+1]);
                     getCity.put(city[i/2],arr);
                 }
-                System.out.println();
+                System.out.println(getCity.toString());
 
                 String getJsonFormatFile = response.toString();
                 Type RailStationListType = new TypeToken<ArrayList<mapSearchResult>>() {}.getType();
