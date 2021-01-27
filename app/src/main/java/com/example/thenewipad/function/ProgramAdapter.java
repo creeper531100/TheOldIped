@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thenewipad.R;
-import com.example.thenewipad.page.mainAdaper.ClickListPage;
+import com.example.thenewipad.page.mainAdaper.WeatherInfoPage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     }
 
     public void setClickListener(String clickListener){
-        Intent inte = new Intent(getContext(), ClickListPage.class);
+        Intent inte = new Intent(getContext(), WeatherInfoPage.class);
         inte.putExtra("getDict",(Serializable) getDict);
         inte.putExtra("clickListener", clickListener);
         getContext().startActivity(inte);

@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.text.TextPaint;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -34,7 +31,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 
-public class ClickListPage extends AppCompatActivity {
+public class WeatherInfoPage extends AppCompatActivity {
 
     Date date = new Date();
     ArrayList<String> list1 = new ArrayList<>();
@@ -70,7 +67,7 @@ public class ClickListPage extends AppCompatActivity {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 
-        setContentView(R.layout.click_list_page);
+        setContentView(R.layout.weather_info_page);
         Intent intent = getIntent();
         HashMap<String, ArrayList<String>> hashMap
                 = (HashMap<String, ArrayList<String>>) intent.getSerializableExtra("getDict");
@@ -165,7 +162,7 @@ public class ClickListPage extends AppCompatActivity {
 
 
         ProgramAdapter programAdapter =
-                new ProgramAdapter(this, list1, icon, list2, R.layout.list_page);
+                new ProgramAdapter(this, list1, icon, list2, R.layout.default_list_page);
         labView.setAdapter(programAdapter);
         labView.setNestedScrollingEnabled(true);
 

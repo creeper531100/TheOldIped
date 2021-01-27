@@ -16,27 +16,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
-import com.example.thenewipad.formatFolder.BusStopRoute;
 import com.example.thenewipad.formatFolder.weatherFormat;
-import com.example.thenewipad.formatFolder.weatherFormatt;
 import com.example.thenewipad.function.ProgramAdapter;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-public class PersonPage extends Fragment {
+public class WeatherMainPage extends Fragment {
     private ArrayList<String> itemList = new ArrayList<String>();
     private ArrayList<String> itemList2 = new ArrayList<String>();
     private RequestQueue mQeue;
@@ -56,7 +45,7 @@ public class PersonPage extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.person_page, container, false);
+        View v = inflater.inflate(R.layout.weather_main_page, container, false);
         //聲明 BusText
         lv = (ListView) v.findViewById(R.id.weather_list);
         lv.setNestedScrollingEnabled(true);
@@ -94,7 +83,7 @@ public class PersonPage extends Fragment {
                     }
                 });
                 ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
-                        R.layout.list_page, weatherElementDict);
+                        R.layout.default_list_page, weatherElementDict);
                 lv.setAdapter(programAdapter);
             }
         }, new Response.ErrorListener() {

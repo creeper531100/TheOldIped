@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.example.thenewipad.R;
 
+/*
+ *文字外框效果
+ *抄來的ㄎㄎ
+ */
 class StrokeTextView extends androidx.appcompat.widget.AppCompatTextView {
 
     private TextView borderText = null;///用于描边的TextView

@@ -1,13 +1,11 @@
 package com.example.thenewipad.page.busPageAdaper;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class BusPageInfo extends AppCompatActivity {
+public class BusInfoPage extends AppCompatActivity {
 
     ViewPager viewPager;
     String[] contentArrary;
@@ -44,7 +42,7 @@ public class BusPageInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_page_info);
+        setContentView(R.layout.bus_info_page);
         //物件初始化
         TextView titleText = findViewById(R.id.TitleText);
         TextView busHeaderText = findViewById(R.id.BusHeaderText);

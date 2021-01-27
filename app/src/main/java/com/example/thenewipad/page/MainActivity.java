@@ -2,18 +2,14 @@ package com.example.thenewipad.page;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -22,11 +18,11 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.BusRoute;
 import com.example.thenewipad.function.JsonDataFormat;
-import com.example.thenewipad.page.busPageAdaper.BusPageInfo;
-import com.example.thenewipad.page.mainAdaper.CellularPagda;
+import com.example.thenewipad.page.busPageAdaper.BusInfoPage;
+import com.example.thenewipad.page.mainAdaper.TransportationPage;
 import com.example.thenewipad.page.mainAdaper.HomePage;
 import com.example.thenewipad.page.mainAdaper.MapPage;
-import com.example.thenewipad.page.mainAdaper.PersonPage;
+import com.example.thenewipad.page.mainAdaper.WeatherMainPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -84,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuggestionClicked(SearchSuggestion searchSuggestion) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this , BusPageInfo.class);
+                intent.setClass(MainActivity.this , BusInfoPage.class);
                 intent.putExtra("title", searchSuggestion.getBody());
                 startActivity(intent);
                 search.clearFocus();
@@ -113,10 +109,10 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomePage();
                             break;
                         case R.id.nav_person:
-                            selectedFragment = new PersonPage();
+                            selectedFragment = new WeatherMainPage();
                             break;
                         case R.id.nav_cellular:
-                            selectedFragment = new CellularPagda();
+                            selectedFragment = new TransportationPage();
                             break;
                         case R.id.nav_setting:
                             selectedFragment = new MapPage();

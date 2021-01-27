@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#151515"
     android:fitsSystemWindows="true"
-    tools:context=".page.busPageAdaper.BusPageInfo">
+    tools:context=".page.busPageAdaper.BusInfoPage">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarLayout"

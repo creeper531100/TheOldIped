@@ -43,9 +43,9 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCkiWXL3DBWzYkpSMqoYWtXA1vuqj980k4" />
 
-        <activity android:name=".page.mainAdaper.ClickListPage" />
+        <activity android:name=".page.mainAdaper.WeatherInfoPage" />
         <activity
-            android:name=".page.busPageAdaper.BusPageInfo"
+            android:name=".page.busPageAdaper.BusInfoPage"
             android:label="@string/title_activity_bus_page_info"
             android:theme="@style/Theme.TheNewIpad.NoActionBar" />
 

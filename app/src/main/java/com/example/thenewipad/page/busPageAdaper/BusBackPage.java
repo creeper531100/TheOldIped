@@ -1,16 +1,13 @@
 package com.example.thenewipad.page.busPageAdaper;
 
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -58,7 +55,7 @@ public class BusBackPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_bus_back_page, container, false);
+        View v = inflater.inflate(R.layout.bus_back_page, container, false);
         lv = v.findViewById(R.id.buslist);
         RequestQueue mQeue = Volley.newRequestQueue(getActivity());
         lv.setNestedScrollingEnabled(true);

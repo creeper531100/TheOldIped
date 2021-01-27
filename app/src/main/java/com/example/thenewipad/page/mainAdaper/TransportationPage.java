@@ -1,6 +1,5 @@
 package com.example.thenewipad.page.mainAdaper;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.RequestQueue;
@@ -22,12 +20,9 @@ import com.example.thenewipad.function.JsonDataFormat;
 import com.example.thenewipad.function.ProgramAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
-public class CellularPagda extends Fragment {
+public class TransportationPage extends Fragment {
     private RequestQueue mQeue;
     private ListView lv;
     private EditText search;
@@ -38,7 +33,7 @@ public class CellularPagda extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.cellular_page, container, false);
+        View v = inflater.inflate(R.layout.transportation_page, container, false);
         lv = (ListView) v.findViewById(R.id.buslist);
         mQeue = Volley.newRequestQueue(getActivity());
         busStop();
@@ -67,7 +62,7 @@ public class CellularPagda extends Fragment {
         }
         ProgramAdapter programAdapter =
                 new ProgramAdapter(getContext(), stringArrayList, num,
-                        dataParsing, R.layout.list_page);
+                        dataParsing, R.layout.default_list_page);
         lv.setAdapter(programAdapter);
     }
 }
