@@ -23,7 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MapPage extends Fragment {
+public class MapPage extends Fragment implements OnMapReadyCallback{
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -38,7 +38,7 @@ public class MapPage extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            Toast.makeText(getActivity(),"Map Ready",Toast.LENGTH_LONG).show();
+            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         }
     };
 
@@ -58,5 +58,10 @@ public class MapPage extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }
