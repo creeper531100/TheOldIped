@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/transBar"
     tools:context=".page.mainAdaper.ClickListPage"
     >
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
         >
 
             <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="850dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/weather_background" />
 
@@ -84,60 +85,67 @@
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <androidx.core.widget.NestedScrollView
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:background="@color/injing"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_weight="0.1"
+                android:gravity="bottom"
+                android:text="目前天氣詳細資料"
+                android:textColor="#F3EFEF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/injing"
-
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="目前天氣詳細資料"
-                    android:textColor="#F3EFEF" />
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="0.5"
+                    android:text="最高氣溫\n最低氣溫\n天氣狀態\n體感\n降雨機率\n空氣品質"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/weather_all_status"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="0.5"
-                        android:text="最高氣溫\n最低氣溫\n天氣狀態\n體感\n降雨機率\n空氣品質"
-                        android:textColor="#FFFFFF" />
-
-                    <TextView
-                        android:id="@+id/weather_all_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="0.5"
-                        android:layout_marginEnd="25dp"
-                        android:textColor="@color/white"
-                        android:text="27°C　\n16°C　\n好 \n濕冷　\n20%　\n商可　" />
-
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="0.5"
+                    android:text="27°C　\n16°C　\n好 \n濕冷　\n20%　\n商可　"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/bus" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

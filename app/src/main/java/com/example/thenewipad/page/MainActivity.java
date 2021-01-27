@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("ParcelCreator")
     public static class Suggestion implements SearchSuggestion {
         private final String mRouteTitle;
-        private final boolean mIsHistory = false;
         public Suggestion(String suggestion) {
             mRouteTitle = suggestion.toLowerCase();
         }

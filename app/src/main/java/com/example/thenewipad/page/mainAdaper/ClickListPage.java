@@ -8,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,9 @@ public class ClickListPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<String> contentArray = new ArrayList<>();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         setContentView(R.layout.click_list_page);
         Intent intent = getIntent();
         HashMap<String, ArrayList<String>> hashMap
@@ -54,7 +58,7 @@ public class ClickListPage extends AppCompatActivity {
         String ante = (new SimpleDateFormat("a")).format(date);
 
         if(ante.equals("上午")) {
-            backGroundImage.setImageResource(R.drawable.weather_sun_backgurond);
+            backGroundImage.setImageResource(R.drawable.weather_background0);
         }else
             backGroundImage.setImageResource(R.drawable.weather_background);
 
@@ -86,7 +90,7 @@ public class ClickListPage extends AppCompatActivity {
             return R.drawable.rain;
         } else if(status.contains("風")){
             return R.drawable.qiang_feng;
-        }else if(status.contains("雲")){
+        }else if(status.contains("雲") || status.contains("陰")){
             return R.drawable.cloud;
         }else
             return R.drawable.weathererror;
