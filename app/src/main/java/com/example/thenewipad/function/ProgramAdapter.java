@@ -22,7 +22,7 @@ public class ProgramAdapter extends ArrayAdapter<String> {
     ArrayList<Integer> images;
     ArrayList<String> programName;
     ArrayList<String> programDescription;
-    Map<String, ArrayList<String>> getDict;
+    Map<String, ArrayList<String>> getDict = new HashMap<>();
     int page;
 
 
@@ -68,7 +68,9 @@ public class ProgramAdapter extends ArrayAdapter<String> {
         singleItem.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setClickListener(programName.get(position).split("\\s+")[0]);
+                if(!getDict.isEmpty()) {
+                    setClickListener(programName.get(position).split("\\s+")[0]);
+                }
             }
         });
         return singleItem;
