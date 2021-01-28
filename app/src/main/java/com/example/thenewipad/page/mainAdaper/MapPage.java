@@ -49,7 +49,6 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
     TextView txt8;
     String searchCity;
     Double coordinate[] = { 25.06229771146565, 121.45665165612434,
-            24.14797281214013, 120.67348740607574,
             22.63612290120027, 120.33561337987628,
             25.033928667125192, 121.56308799118433,
             24.994638135578185, 121.30033616386112,
@@ -69,9 +68,10 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
             22.76133014718911, 121.14376240207108,
             24.449332112015394, 118.37697226999406,
             23.566944109909834, 119.61357799110984,
-            26.160302588286946, 119.95133231785832};
-    String city[] = {"新北市","台中市","高雄市","台北市","桃園市","台南市","彰化縣","屏東縣","雲林縣","新竹縣","苗栗縣",
-            "嘉義縣","南投縣","宜蘭縣","新竹市","基隆市","花蓮縣","嘉義市","台東縣","金門縣","澎湖縣","連江縣"};
+            26.160302588286946, 119.95133231785832,
+            24.14797281214013, 120.67348740607574};
+    String city[] = {"新北市","高雄市","台北市","桃園市","台南市","彰化縣","屏東縣","雲林縣","新竹縣","苗栗縣",
+            "嘉義縣","南投縣","宜蘭縣","新竹市","基隆市","花蓮縣","嘉義市","台東縣","金門縣","澎湖縣","連江縣","台中市"};
     Map<String,  Integer> getSum = new HashMap<>();
     Map<String, ArrayList<Double>> getCity = new HashMap<>();
 
@@ -119,8 +119,7 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sunmoonlake, 7));
                     //14這個是你想要呈現的地圖的倍率，可以自己試試調整看看，數字越大地圖越大
                 }
-
-
+            setText(sum1);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -163,7 +162,7 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                              @Nullable Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_maps, container, false);
         txt6 = (TextView)v.findViewById(R.id.txt6);
-        txt6.setText("0");
+        System.out.println(sum1+"aaaa");
         txt7 = (TextView)v.findViewById(R.id.txt7);
         txt8 = (TextView)v.findViewById(R.id.txt8);
         edt = (EditText)v.findViewById(R.id.password);
@@ -212,5 +211,13 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
     }
     public int getSum1(String city){
         return getSum.get(city);
+    }
+
+
+    public void setText(int sum1){
+        txt6.setText("感染總數: " + sum1);
+        txt7.setText("境外移入: " + getSum.get("空值"));
+        int tSum =  sum1 - getSum.get("空值");
+        txt8.setText("本土案例: " + tSum);
     }
 }
