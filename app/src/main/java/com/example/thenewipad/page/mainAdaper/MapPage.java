@@ -1,12 +1,14 @@
 package com.example.thenewipad.page.mainAdaper;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,14 +35,19 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class MapPage extends Fragment implements OnMapReadyCallback{
     GoogleMap mMap ;
+    int sum1;
+    Button btnner;
+    EditText edt ;
+    TextView txt6;
+    TextView txt7;
+    TextView txt8;
+    String searchCity;
     Double coordinate[] = { 25.06229771146565, 121.45665165612434,
             24.14797281214013, 120.67348740607574,
             22.63612290120027, 120.33561337987628,
@@ -97,6 +104,7 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                     getSum.put(a, 0);
                 }
                 for (mapSearchResult row: obj) {
+                    sum1 += Integer.parseInt(row.get確定病例數());
                     int sum = Integer.parseInt(row.get確定病例數());
                     getSum.put(row.get縣市(), Integer.valueOf(getSum.get(row.get縣市()))+sum);
                 }
@@ -106,11 +114,12 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                     mMap.addMarker(new MarkerOptions().position(sunmoonlake)
                             .title(city[i/2])
                             //點選標記點後會跳出資訊欄的標題
-                            .snippet("確診人數" + getSum.get(city[i/2]))).showInfoWindow();
+                            .snippet("確診人數" + getSum.get(city[i/2])));
                     //點選標記點後會跳出資訊欄的詳細內容
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sunmoonlake, 7));
                     //14這個是你想要呈現的地圖的倍率，可以自己試試調整看看，數字越大地圖越大
                 }
+
 
             }
         }, new Response.ErrorListener() {
@@ -139,7 +148,7 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
         public void onMapReady(GoogleMap googleMap) {
             requestQueue = Volley.newRequestQueue(getActivity());
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-             mMap = googleMap;
+            mMap = googleMap;
             jsonPare();
 
         }
@@ -153,17 +162,34 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v =  inflater.inflate(R.layout.fragment_maps, container, false);
-        Button launch = (Button) v.findViewById(R.id.btn);
-        launch.setOnClickListener(new View.OnClickListener() {
+        txt6 = (TextView)v.findViewById(R.id.txt6);
+        txt6.setText("0");
+        txt7 = (TextView)v.findViewById(R.id.txt7);
+        txt8 = (TextView)v.findViewById(R.id.txt8);
+        edt = (EditText)v.findViewById(R.id.password);
+        btnner = (Button) v.findViewById(R.id.btnner);
+        btnner.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                String uriString = String.format("geo:%f,%f", AGRA.latitude, AGRA.longitude);
-                Uri intentUri = Uri.parse(uriString);
-                Intent intent = new Intent(Intent.ACTION_VIEW, intentUri);
-                intent.setPackage("com.google.android.apps.maps");
-                startActivity(intent);
-            }
-        });
+                public void onClick (View v)
+                {
+                    try  {
+                    searchCity = edt.getText().toString();
+                    ArrayList<Double> arr = new ArrayList<>();
+                    arr = (getCity.get(searchCity));
+
+
+                    LatLng sunmoonlake = new LatLng(arr.get(0), arr.get(1));
+                    mMap.addMarker(new MarkerOptions().position(sunmoonlake)
+                            .title(searchCity)
+                            .snippet("確診人數" + getSum1(searchCity))).showInfoWindow();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sunmoonlake, 9));
+
+                    }catch (NullPointerException e){
+                        Toast.makeText(v.getContext(), "輸入錯誤", Toast.LENGTH_SHORT).show();
+                    }
+                }
+             });
+
         return v;
     }
 
@@ -183,5 +209,8 @@ public class MapPage extends Fragment implements OnMapReadyCallback{
 
 
 
+    }
+    public int getSum1(String city){
+        return getSum.get(city);
     }
 }
