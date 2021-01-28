@@ -1,4 +1,4 @@
-package com.example.thenewipad.WeatherPageAdaper;
+package com.example.thenewipad.page.WeatherPageAdaper;
 
 import android.os.Bundle;
 

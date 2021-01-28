@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.thenewipad.R;
-import com.example.thenewipad.WeatherPageAdaper.WeatherInfoPage;
+import com.example.thenewipad.page.WeatherPageAdaper.WeatherInfoPage;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeatherPageAdaper.FuatureWeatherPage">
+    tools:context=".page.WeatherPageAdaper.FuatureWeatherPage">
 
     <ListView
         android:id="@+id/future_weather_list"
