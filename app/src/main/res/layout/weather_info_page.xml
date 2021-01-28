@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/transBar"
-    tools:context=".page.mainAdaper.WeatherInfoPage"
+    tools:context=".WeatherPageAdaper.WeatherInfoPage"
     >
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -24,122 +24,63 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="45dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/city_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_light"
-                android:foregroundGravity="center"
-                android:gravity="center"
-                android:text="台中市"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/showTimeinWeather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1月26日 週二 13:13"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/temper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu_light"
-                android:text="25°C"
-                android:textColor="@color/white"
-                android:textSize="72dp" />
-
-            <TextView
-                android:id="@+id/weather_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/ubuntu_light"
-                android:text="大致晴朗"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="right"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="25dp"
-            android:scaleType="centerInside"
-            tools:srcCompat="@drawable/tai_yang_yun" />
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_gravity="bottom"
-                android:gravity="bottom"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="45dp"
                 android:orientation="vertical">
 
-                <com.example.thenewipad.function.StrokeTextView
+                <TextView
+                    android:id="@+id/city_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:gravity="bottom"
-                    android:text="目前天氣詳細資料"
-                    android:textColor="#F3EFEF" />
+                    android:fontFamily="@font/ubuntu_light"
+                    android:foregroundGravity="center"
+                    android:gravity="center"
+                    android:text="台中市"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
-                <com.example.thenewipad.function.StrokeTextView
-                    android:id="@+id/updata_time"
+                <TextView
+                    android:id="@+id/showTimeinWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:text="更新日期: 2021-01-27 18:00:00"
-                    android:textColor="#F3EFEF" />
+                    android:text="1月26日 週二 13:13"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/temper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="25°C"
+                    android:textColor="@color/white"
+                    android:textSize="72dp" />
 
-                    <com.example.thenewipad.function.StrokeTextView
-                        android:id="@+id/measures"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginTop="30dp"
-                        android:layout_weight="0.5"
-                        android:text="最高氣溫\n最低氣溫\n天氣狀態\n體感\n降雨機率\n空氣品質"
-                        android:textColor="#FFFFFF"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-
-                    <com.example.thenewipad.function.StrokeTextView
-                        android:id="@+id/weather_all_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginEnd="25dp"
-                        android:layout_weight="0.5"
-                        android:text="27°C　\n16°C　\n好 \n濕冷　\n20%　\n商可　"
-                        android:textColor="@color/white" />
-
-
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/weather_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="大致晴朗"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginTop="45dp"
+                android:layout_marginEnd="25dp"
+                android:scaleType="centerInside"
+                tools:srcCompat="@drawable/tai_yang_yun" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -156,20 +97,40 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs2"
                 android:layout_width="match_parent"
-                app:title="未來一週天氣"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme" />
+                android:layout_gravity="center"
+                android:background="@color/u11"
+                android:contextClickable="true"
+                android:foregroundGravity="center"
+                app:tabIndicatorColor="#6897bb"
+                app:tabSelectedTextColor="#6897bb"
+                app:tabTextColor="@color/white">
 
-            <ListView
-                android:id="@+id/future_weather_list"
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/now"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="目前天氣詳細狀況" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未來一週天氣" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            </ListView>
+            </androidx.viewpager.widget.ViewPager>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

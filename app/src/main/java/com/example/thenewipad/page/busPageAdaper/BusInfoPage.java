@@ -47,7 +47,7 @@ public class BusInfoPage extends AppCompatActivity {
         TextView titleText = findViewById(R.id.TitleText);
         TextView busHeaderText = findViewById(R.id.BusHeaderText);
         tabLayout = findViewById(R.id.tabs);
-        viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager2);
         //加入我的最愛
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
