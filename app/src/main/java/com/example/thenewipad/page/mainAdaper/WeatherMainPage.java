@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.weatherFormat;
+import com.example.thenewipad.function.Func;
 import com.example.thenewipad.function.ProgramAdapter;
 import com.google.gson.Gson;
 
@@ -31,6 +32,7 @@ public class WeatherMainPage extends Fragment {
     private RequestQueue mQeue;
     private ArrayList<Integer> num = new ArrayList<Integer>();
     private ListView lv;
+    Func getWeatherIcon = new Func();
     /*
      *  @NonNull        傳入的值不能為空
      *  @Nullable       傳入的值可以為空
@@ -79,7 +81,7 @@ public class WeatherMainPage extends Fragment {
                         itemList.add(s + "  " + strings.get(0));
                         itemList2.add(strings.get(3) + ", 降雨機率" + strings.get(1) + "%\n"
                                 + "氣溫: " + strings.get(2) + "度 ~ " + strings.get(4) + "度");
-                        num.add(getWeatherIcon(strings.get(0)));
+                        num.add(getWeatherIcon.getWeatherIcon(strings.get(0)));
                     }
                 });
                 ProgramAdapter programAdapter = new ProgramAdapter(getContext(),itemList , num, itemList2 ,
@@ -93,24 +95,5 @@ public class WeatherMainPage extends Fragment {
         });
 
         mQeue.add(request);
-    }
-
-    int getWeatherIcon(String status){
-        if(status.contains("晴時") || status.contains("時晴") ){
-            return R.drawable.tai_yang_yun;
-        } else if(status.contains("雷")){
-            return R.drawable.lei_yu;
-        } else if(status.contains("雨")){
-            return R.drawable.xia_yu;
-        } else if(status.contains("晴")){
-            return R.drawable.tai_yang;
-        } else if(status.contains("霧")){
-            return R.drawable.rain;
-        } else if(status.contains("風")){
-            return R.drawable.qiang_feng;
-        }else if(status.contains("雲")){
-            return R.drawable.cloud;
-        }else
-            return R.drawable.weathererror;
     }
 }

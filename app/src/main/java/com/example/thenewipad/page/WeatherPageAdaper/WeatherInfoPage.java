@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +23,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.thenewipad.R;
 import com.example.thenewipad.formatFolder.weatherFormatt;
+import com.example.thenewipad.function.Func;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -52,7 +57,10 @@ public class WeatherInfoPage extends AppCompatActivity {
     ArrayList<String> contentArray;
     ArrayList<String> measures = new ArrayList<>();
     ArrayList<String> measuresContext = new ArrayList<>();
-    ArrayList<Integer> measuresIcon = new ArrayList<>();
+    int[] measuresIconArr = {R.drawable.cold, R.drawable.avg_temp, R.drawable.tai_yang, R.drawable.wind
+                        ,R.drawable.umbrella, R.drawable.tai_yang,R.drawable.wet0, R.drawable.wet1
+                        ,R.drawable.user_hot,R.drawable.hot ,R.drawable.tai_yang, R.drawable.uv, R.drawable.user_cold
+                        ,R.drawable.ic_arrow_back_black_24dp};
 
     String clickListener;
     String weatherStatus;
@@ -69,9 +77,8 @@ public class WeatherInfoPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mQeue = Volley.newRequestQueue(this);
 
-        //Window window = getWindow();
-        //window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
+        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.weather_info_page);
         Intent intent = getIntent();
@@ -123,6 +130,7 @@ public class WeatherInfoPage extends AppCompatActivity {
     }
 
     public void setPage(Map<String, Map<String, ArrayList<String>>> data){
+        Func func = new Func();
 
         city = (TextView) findViewById(R.id.city_title);
         weatherStatusText = (TextView) findViewById(R.id.weather_status);
@@ -154,7 +162,6 @@ public class WeatherInfoPage extends AppCompatActivity {
                 if (strings.get(0).length() < 8){
                     measures.add(s);
                     measuresContext.add(strings.get(0));
-                    measuresIcon.add(R.drawable.cloud);
                     nowWeather.put(s, strings.get(0));
                 }
             }
@@ -162,9 +169,9 @@ public class WeatherInfoPage extends AppCompatActivity {
 
 
         for (int i = 0, j = 0; i < data.get(clickListener).get("天氣現象").size(); i+=2, j++) {
-            list1.add(addDate(j));
+            list1.add(func.addDate(j, date));
             list2.add(data.get(clickListener).get("天氣現象").get(i) + "\n溫度: " + data.get(clickListener).get("最低溫度").get(i) + "°C ~ " + data.get(clickListener).get("最高溫度").get(i) + "°C");
-            icon.add(getWeatherIcon(addDate(j) + "  " + data.get(clickListener).get("天氣現象").get(i)));
+            icon.add(func.getWeatherIcon(func.addDate(j, date) + "  " + data.get(clickListener).get("天氣現象").get(i)));
         }
 
         timeSet.setText(sdf);
@@ -172,41 +179,13 @@ public class WeatherInfoPage extends AppCompatActivity {
 
         weatherStatusText.setText(weatherStatus); // 天氣狀態
         temper.setText(nowWeather.get("平均溫度")+ "°C"); //設定溫度
-        imageView.setImageResource(getWeatherIcon(weatherStatus));
+        imageView.setImageResource(func.getWeatherIcon(weatherStatus));
 
 
         String[] no = {"目前", "未來"};
         MyPagerAdapter2 myPagerAdapter = new MyPagerAdapter2(getSupportFragmentManager(), no);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(myPagerAdapter);
-    }
-
-    int getWeatherIcon(String status){
-        if(status.contains("晴時") || status.contains("時晴") ){
-            return R.drawable.tai_yang_yun;
-        } else if(status.contains("雷")){
-            return R.drawable.lei_yu;
-        } else if(status.contains("雨")){
-            return R.drawable.xia_yu;
-        } else if(status.contains("晴")){
-            return R.drawable.tai_yang;
-        } else if(status.contains("霧")){
-            return R.drawable.rain;
-        } else if(status.contains("風")){
-            return R.drawable.qiang_feng;
-        }else if(status.contains("雲") || status.contains("陰")){
-            return R.drawable.cloud;
-        }else
-            return R.drawable.weathererror;
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    public String addDate(int getDate){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, getDate);
-        SimpleDateFormat format1 = new SimpleDateFormat("M月d日 EEEE");
-        return format1.format(cal.getTime());
     }
 
     //製作分頁用
@@ -219,8 +198,12 @@ public class WeatherInfoPage extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
+            ArrayList<Integer> measuresIcon = new ArrayList<>();
             switch (position){
                 case 0:
+                    for (int row: measuresIconArr) {
+                        measuresIcon.add(row);
+                    }
                     //將父業的資料給子頁
                     return new NowWeatherPage(measures, measuresContext, measuresIcon);
                 case 1:
